@@ -7,10 +7,10 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
 from system.models import System
-from .models import Eut
+from .models import Eut, Component_connection
 from django.utils.decorators import method_decorator
 from datetime import datetime
-from .forms import Form_Eut
+from .forms import Form_Eut, Form_Eut_component_connection
 
 @method_decorator(login_required, name='dispatch')
 class Eut_MainView(View):
@@ -67,6 +67,7 @@ class Eut_list_view(View):
 
 @method_decorator(login_required, name='dispatch')
 class Eut_detail_view(View):
+    form_add_component_class = Form_Eut_component_connection
     template_name = 'eut/eut_detail.html'
 
     def get(self, request, *args, **kwargs):
@@ -79,6 +80,13 @@ class Eut_detail_view(View):
         # store the pk of the request objects
         eut_id = kwargs["pk"]
         print(eut_id)
+        # get the eut list
+        eut = Eut.objects.filter(id=eut_id)
+
+        initial = {"eut" : eut[0],}
+        form = self.form_add_component_class(initial=initial)
+        context["form"] = form
+
 
         # get the eut list
         eut = Eut.objects.filter(id=eut_id)
@@ -87,10 +95,36 @@ class Eut_detail_view(View):
         except:
             context["alert_danger_avalible"] = True
             context["alert_danger"] = str("EUT List query list is empty. " +
-                                "Eut with id {} is not avalible".format(eut_id))
+                                        "Eut with id {} is not avalible".format(eut_id))
 
 
-        print(eut)
+        component_connection_list = Component_connection.objects.filter(eut=eut_id)
+        print(component_connection_list)
+        try:
+            context["component_connection_list"] = component_connection_list[0]
+        except:
+            context["alert_danger_avalible"] = True
+            context["alert_danger"] = str("component conni is not avalible")
 
+
+
+        return render(request, self.template_name, context)
+
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_add_component_class(request.POST)
+
+        #print(form.fields["component"])
+
+        #if form.is_valid():
+        #    form = form.save(commit=False)
+        #    form.user_creator = request.user
+        #    form.date_creation = datetime.now()
+        #    print(form.component)
+        #    #form.save()
+
+        #    return HttpResponseRedirect(reverse('eut:eut_detail' , kwargs={'pk': form.pk}))
+
+        context = {'form': form}
 
         return render(request, self.template_name, context)

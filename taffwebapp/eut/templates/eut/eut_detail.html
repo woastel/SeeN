@@ -9,6 +9,7 @@
 
 <h1>EUT detail View</h1>
 
+<!-- Alert Boxen -->
 <div class="row">
   <div class="col-lg-12">
     {% if alert_danger_avalible == True %}
@@ -19,8 +20,7 @@
   </div>
 </div>
 
-
-
+<!-- Eut detail Box -->
 <div class="row">
   <div class="col-lg-12">
     <div class="panel panel-default">
@@ -30,24 +30,55 @@
       <div class="panel-body">
         <p>Eut Name: {{ eut.name }} </p>
         <p>Information: {{ eut.info }} </p>
-
         <p>Creator: {{ eut.user_creator }} </p>
         <p>Modified by: {{ eut.user_updater }} </p>
-
         <p>Creation date: {{ eut.date_creation }} </p>
         <p>Updated: {{ eut.date_updateed }} </p>
-
         <p>System: {{ eut.system.name }} </p>
-
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Link liste -->
+<div class="row">
+  <div class="col-lg-12">
 
 
+
+    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h3> form component </h3>
+      {{form.media}}
+      {% for field in form %}
+          <!-- ein kleines script um die datetime picker zu initialisieren -->
+          <script>
+              $(function () {
+                  $('.datetime-input').datetimepicker({
+                      format:'YYYY-MM-DD HH:mm:ss'
+                  });
+              });
+          </script>
+          <div class="form-group">
+            <div class="col-lg-offset-1 col-lg-4">
+              <label class="control-label">{{ field.label_tag }}</label>
+            </div>
+            <div class="col-lg-6">{{ field}}</div>
+            <div class="col-lg-1">
+              <span class="text-danger small">{{ field.errors }}</span>
+            </div>
+          </div>
+      {% endfor %}
+      <div class="form-group">
+        <div class="col-lg-offset-10 col-lg-2">
+          <button type="submit" class="btn btn-success">OK</button>
+        </div>
+      </div>
+    </form>
 
 
   </div>
 </div>
-
 
 
 {% endblock %}

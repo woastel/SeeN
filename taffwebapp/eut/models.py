@@ -37,7 +37,7 @@ class Component_connection(models.Model):
     user_creator = models.ForeignKey(User)
     date_creation = models.DateTimeField()
 
-    numberofcomponents = models.PositiveIntegerField()
+    component_count = models.PositiveIntegerField()
 
     eut = models.ForeignKey(Eut)
     component = models.ForeignKey(Component)
