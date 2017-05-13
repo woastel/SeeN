@@ -1,0 +1,47 @@
+{% extends 'components/base_components.html' %}
+
+{% block components_body %}
+
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'components/style.css' %}" />
+
+<div class="row">
+  <div class="col-lg-12">
+    <h1> Components Overview</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading panel-heading-custom1">
+        <h3 class="panel-title" > Component Types</h3>
+      </div>
+      <div class="panel-body">
+
+        {% for item in component_type_list %}
+
+          <p> {{item.id}} - {{item.name}} </p>
+
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+    <div class="panel panel-default item-box-color1">
+      <div class="panel-heading panel-heading-custom1">
+        <h3 class="panel-title" > {{ schedule_object.name }} - ( ID: {{ schedule_object.id }} )</h3>
+      </div>
+      <div class="panel-body">
+        <p> test </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
