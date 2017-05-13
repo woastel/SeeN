@@ -11,8 +11,40 @@
 
 <div class="row">
   <div class="col-lg-12">
+    {% if alert_danger_avalible == True %}
+      <div class="alert alert-danger" role="alert">
+        <p> {{ alert_danger }} </p>
+      </div>
+    {% endif %}
+  </div>
+</div>
 
-  
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">EUT: [ {{ eut.name }} ] ({{eut.id}})</h3>
+      </div>
+      <div class="panel-body">
+        <p>Eut Name: {{ eut.name }} </p>
+        <p>Information: {{ eut.info }} </p>
+
+        <p>Creator: {{ eut.user_creator }} </p>
+        <p>Modified by: {{ eut.user_updater }} </p>
+
+        <p>Creation date: {{ eut.date_creation }} </p>
+        <p>Updated: {{ eut.date_updateed }} </p>
+
+        <p>System: {{ eut.system.name }} </p>
+
+      </div>
+    </div>
+
+
+
+
   </div>
 </div>
 

@@ -12,7 +12,7 @@
 
     {% for eut in eutlist %}
 
-      <p> {{ eut }} </p>
+      <a href="{% url 'eut:eut_detail' eut.id %}"><p> {{ eut }} </p></a>
 
     {% endfor %}
 
