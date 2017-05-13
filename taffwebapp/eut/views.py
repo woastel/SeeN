@@ -62,7 +62,7 @@ class Eut_detail_view(View):
         # only debug information print
         print("kwargs: {}".format(kwargs))
 
-        eut = Eut.objects.filter(id=)
+        eut = Eut.objects.filter(id=1)
 
 
         return render(request, self.template_name, context)
