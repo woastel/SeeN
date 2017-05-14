@@ -2,16 +2,19 @@
 
 {% block eut_body %}
 
-
 {% load static %}
 
+<!-- CSS and JS files for something -->
 <link rel="stylesheet" type="text/css" href="{% static 'components/style.css' %}" />
 <link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
 <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 
-
-
-<h1>EUT detail View</h1>
+<!-- Ueberschrift EUT detial View -->
+<div class="row">
+  <div class="col-lg-12">
+    <h1>EUT detail View</h1>
+  </div>
+</div>
 
 <!-- Alert Boxen -->
 <div class="row">
@@ -66,14 +69,14 @@
   </div>
 </div>
 
-
-
+<!-- Script for Datatable Components from EUT -->
 <script>
   var table = $(document).ready(function(){
       $('#comp_coni_list_table').DataTable();
   });
 </script>
 
+<!-- Datatable - Components from the EUT  -->
 <div class="row">
   <div class="col-lg-12">
     <div class="panel panel-default">
@@ -117,7 +120,5 @@
     </div>
   </div>
 </div>
-
-
 
 {% endblock %}
