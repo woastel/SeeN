@@ -121,9 +121,10 @@ class Eut_detail_view(View):
             form = form.save(commit=False)
             form.user_creator = request.user
             form.date_creation = datetime.now()
-            print(form.component)
+            
+            # save the form (object)
             form.save()
-            print("form id :: {}".format(form.id))
+
 
             return HttpResponseRedirect(reverse('eut:eut_detail', kwargs={"pk": form.eut.id}))
 
