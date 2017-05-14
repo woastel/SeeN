@@ -44,105 +44,80 @@
   </div>
 </div>
 
+<!-- Add Component Form -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="col-lg-12">
+            <h4> Add Component to EUT </h4>
+          </div>
+          <div class="col-lg-10">
+            {{form}}
+          </div>
+          <div class="col-lg-2">
+            <button type="submit" class="btn btn-success">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <script>
   var table = $(document).ready(function(){
       $('#comp_coni_list_table').DataTable();
   });
 </script>
 
-
 <div class="row">
   <div class="col-lg-12">
-    <h1> Component connection List </h1>
-
-    <div class="table-responsive">
-      <table id="comp_coni_list_table" class="table table-bordered">
-        <thead>
-          <tr class="warning">
-            <th>ID </th>
-            <th>Info</th>
-            <th>User Creator</th>
-            <th>date creation</th>
-            <th>Count #</th>
-            <th>Eut id</th>
-            <th>Eut name</th>
-            <th>component id </th>
-            <th>component name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in component_connection_list %}
-              <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.info }}</td>
-                <td>{{ item.user_creator }}</td>
-                <td>{{ item.date_creation }}</td>
-                <td>{{ item.component_count }}</td>
-                <td>{{ item.eut.id }}</td>
-                <td>{{ item.eut.name }}</td>
-                <td>{{ item.component.id }}</td>
-                <td>{{ item.component.name }}</td>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"> Component connection List </h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table id="comp_coni_list_table" class="table table-bordered">
+            <thead>
+              <tr class="warning">
+                <th>ID </th>
+                <th>Info</th>
+                <th>User Creator</th>
+                <th>date creation</th>
+                <th>Count #</th>
+                <th>Eut id</th>
+                <th>Eut name</th>
+                <th>component id </th>
+                <th>component name</th>
               </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-</div>
-
-
-<div class="row">
-  <div class="col-lg-12">
-    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="col-lg-12">
-        <h3> Add Component to EUT </h3>
-      </div>
-      <div class="col-lg-10">
-        {{form}}
-      </div>
-      <div class="col-lg-2">
-        <button type="submit" class="btn btn-success">Add</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-
-<!-- Add Component Form -->
-<div class="row">
-  <div class="col-lg-12">
-    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <h3> form component </h3>
-      {% for field in form %}
-          <!-- ein kleines script um die datetime picker zu initialisieren -->
-          <script>
-              $(function () {
-                  $('.datetime-input').datetimepicker({
-                      format:'YYYY-MM-DD HH:mm:ss'
-                  });
-              });
-          </script>
-          <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-4">
-              <label class="control-label">{{ field.label_tag }}</label>
-            </div>
-            <div class="col-lg-6">{{ field}}</div>
-            <div class="col-lg-1">
-              <span class="text-danger small">{{ field.errors }}</span>
-            </div>
-          </div>
-      {% endfor %}
-      <div class="form-group">
-        <div class="col-lg-offset-10 col-lg-2">
-          <button type="submit" class="btn btn-success">OK</button>
+            </thead>
+            <tbody>
+              {% for item in component_connection_list %}
+                  <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.info }}</td>
+                    <td>{{ item.user_creator }}</td>
+                    <td>{{ item.date_creation }}</td>
+                    <td>{{ item.component_count }}</td>
+                    <td>{{ item.eut.id }}</td>
+                    <td>{{ item.eut.name }}</td>
+                    <td>{{ item.component.id }}</td>
+                    <td>{{ item.component.name }}</td>
+                  </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
+
 
 
 {% endblock %}
