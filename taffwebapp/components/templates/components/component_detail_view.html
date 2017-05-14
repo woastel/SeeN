@@ -2,6 +2,40 @@
 
 {% block components_body %}
 
-  <h1> Component Detail View html </h1>
+<!-- Component Headline -->
+<div class="row">
+  <div class="col-lg-12">
+    <h1>Component Detail</h1>
+  </div>
+</div>
+
+<!-- Alert Boxen -->
+<div class="row">
+  <div class="col-lg-12">
+    {% if alert_danger_avalible == True %}
+      <div class="alert alert-danger" role="alert">
+        <p> {{ alert_danger }} </p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Component Detail Box -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Component: [ {{ component.name }} ] ({{component.id}})</h3>
+      </div>
+      <div class="panel-body">
+        <p>Component: {{ component.name }} </p>
+        <p>Component Type: {{ component.component_type.name }} </p>
+        <p>Vendor: {{ component.vendor.name }} </p>
+        <p>Create: {{ component.date_creation }} | {{ component.user_creator }} </p>
+        <p>Updated: {{ component.date_update }} | {{ component.user_updater }} </p>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

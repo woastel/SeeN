@@ -88,6 +88,9 @@ class Eut_detail_view(View):
         form = self.form_add_component_class(initial=initial)
         context["form"] = form
 
+        for a in form:
+            print(type(a))
+
 
         # get the eut list
         eut = Eut.objects.filter(id=eut_id)

@@ -158,14 +158,25 @@ class Component_Create_View(View):
         context.update(self.panel_titel)
         return render(request, self.template_name, context)
 
-
 @method_decorator(login_required, name='dispatch')
 class Component_Detail_View(View):
     template_name = 'components/component_detail_view.html'
 
     def get(self, request, *args, **kwargs):
-        print("Das ist ein Test")
-        print(self.template_name)
+        context = {}
+        context["alert_danger_avalible"] = False
+
+        # get the component id from the kwargs -- key = "pk"
+        component_id = kwargs["pk"]
+
+        component = Component.objects.filter(id=component_id)
+        try:
+            component = component[0]
+            context["component"] = component
+        except:
+            context["alert_danger_avalible"] = True
+            context["alert_danger"] = "Error: Component List is empty"
+
         username_request = self.request.user.username
-        context = {'info_text': " Main View is OK "}
+
         return render(request, self.template_name, context)

@@ -9,10 +9,10 @@
 <link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
 <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 
-<!-- Ueberschrift EUT detial View -->
+<!-- Eut Heatline -->
 <div class="row">
   <div class="col-lg-12">
-    <h1>EUT detail View</h1>
+    <h1>EUT Detail</h1>
   </div>
 </div>
 
@@ -72,6 +72,51 @@
 <!-- Script for Datatable Components from EUT -->
 <script>
   var table = $(document).ready(function(){
+      $('#eut_complist').DataTable();
+  });
+</script>
+
+<!-- Datatable - Components from the EUT  -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Eut Components</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table id="eut_complist" class="table table-bordered">
+            <thead>
+              <tr class="warning">
+                <th>Infotext </th>
+                <th>count #</th>
+                <th>Component</th>
+                <th>Component Type</th>
+                <th>Delete from EUT</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in component_connection_list %}
+                  <tr>
+                    <td>{{ item.info }}</td>
+                    <td>{{ item.component_count }}</td>
+                    <td><a href="{% url 'components:component_detail' item.component.id %}">
+                        {{ item.component.name }}</a></td>
+                    <td>{{ item.component.component_type.name }}</td>
+                    <td> Delete </td>
+                  </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script for Datatable Components from EUT -->
+<script>
+  var table = $(document).ready(function(){
       $('#comp_coni_list_table').DataTable();
   });
 </script>
@@ -81,7 +126,7 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"> Component connection List </h3>
+        <h3 class="panel-title">DEBUG: Info --- Component connection List </h3>
       </div>
       <div class="panel-body">
         <div class="table-responsive">
