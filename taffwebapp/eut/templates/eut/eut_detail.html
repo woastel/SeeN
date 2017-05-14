@@ -6,6 +6,10 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'components/style.css' %}" />
+<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+
 
 <h1>EUT detail View</h1>
 
@@ -40,7 +44,57 @@
   </div>
 </div>
 
-<!-- Link liste -->
+<script>
+  var table = $(document).ready(function(){
+      $('#comp_coni_list_table').DataTable();
+  });
+</script>
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <h1> Component connection List </h1>
+
+    <div class="table-responsive">
+      <table id="comp_coni_list_table" class="table table-bordered">
+        <thead>
+          <tr class="warning">
+            <th>ID </th>
+            <th>Name</th>
+            <th>User Creator</th>
+            <th>date creation</th>
+            <th>Count #</th>
+            <th>Eut id</th>
+            <th>Eut name</th>
+            <th>component id </th>
+            <th>component name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in component_connection_list %}
+              <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.user_creator }}</td>
+                <td>{{ item.date_creation }}</td>
+                <td>{{ item.component_count }}</td>
+                <td>{{ item.eut.id }}</td>
+                <td>{{ item.eut.name }}</td>
+                <td>{{ item.component.id }}</td>
+                <td>{{ item.component.name }}</td>
+              </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<!-- Add Component Form -->
 <div class="row">
   <div class="col-lg-12">
 

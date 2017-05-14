@@ -65,6 +65,7 @@ class Eut_list_view(View):
 
         return render(request, self.template_name, context)
 
+
 @method_decorator(login_required, name='dispatch')
 class Eut_detail_view(View):
     form_add_component_class = Form_Eut_component_connection
@@ -101,7 +102,7 @@ class Eut_detail_view(View):
         component_connection_list = Component_connection.objects.filter(eut=eut_id)
         print(component_connection_list)
         try:
-            context["component_connection_list"] = component_connection_list[0]
+            context["component_connection_list"] = component_connection_list
         except:
             context["alert_danger_avalible"] = True
             context["alert_danger"] = str("component conni is not avalible")
@@ -114,16 +115,17 @@ class Eut_detail_view(View):
     def post(self, request, *args, **kwargs):
         form = self.form_add_component_class(request.POST)
 
-        #print(form.fields["component"])
+        print(form.fields["component"])
 
-        #if form.is_valid():
-        #    form = form.save(commit=False)
-        #    form.user_creator = request.user
-        #    form.date_creation = datetime.now()
-        #    print(form.component)
-        #    #form.save()
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user_creator = request.user
+            form.date_creation = datetime.now()
+            print(form.component)
+            form.save()
+            print("form id :: {}".format(form.id))
 
-        #    return HttpResponseRedirect(reverse('eut:eut_detail' , kwargs={'pk': form.pk}))
+            return HttpResponseRedirect(reverse('eut:eut_detail', kwargs={"pk": form.eut.id}))
 
         context = {'form': form}
 

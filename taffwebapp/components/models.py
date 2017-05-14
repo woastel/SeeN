@@ -65,14 +65,7 @@ class Component(models.Model):
     def __str__(self):
         return(
                 str(self.id) + "-" +
-                str(self.name) + "-" +
-                str(self.component_type) + "-" +
-                "TC " + str(self.thermal_charakter_avalible) + " " +
-                str(self.thermal_charakter) + "-" +
-                "EC " + str(self.electronic_charakter_avalible) + " " +
-                str(self.electronic_charakter) + "-" +
-                "MC " + str(self.mechanic_charakter_avalible) + " " +
-                str(self.mechanic_charakter) + "-" +
-                "CC " + str(self.cable_charakter_avalible) + " " +
-                str(self.cable_charakter) + "-"
+                str(self.component_type) + "- : " +
+                str(self.name)
+
             )

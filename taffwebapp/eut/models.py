@@ -46,4 +46,4 @@ class Component_connection(models.Model):
         return( str(self.id) + "-" +
                 str(self.name) + "-" +
                 "EUT: " + str(self.eut) + "-" +
-                "Comp: " + str(self.component))
+                "Comp: " + str(self.component.name))
