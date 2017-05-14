@@ -115,13 +115,20 @@ class Eut_detail_view(View):
     def post(self, request, *args, **kwargs):
         form = self.form_add_component_class(request.POST)
 
-        print(form.fields["component"])
+        print("......................")
+        print("kwargs")
+        print(kwargs)
+        print("......................")
+
+
+        eut_id = kwargs["pk"]
 
         if form.is_valid():
             form = form.save(commit=False)
             form.user_creator = request.user
             form.date_creation = datetime.now()
-            
+            form.eut = Eut.objects.filter(id=eut_id)[0]
+
             # save the form (object)
             form.save()
 

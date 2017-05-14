@@ -16,7 +16,7 @@ class Form_Eut_component_connection(forms.ModelForm):
         fields = [
             "name",
             "component_count",
-            "eut",
+            #"eut",
             "component",
             ]
 
