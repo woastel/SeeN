@@ -120,7 +120,9 @@ class Eut_detail_view(View):
         print(kwargs)
         print("......................")
 
-
+        # eut_id aus den kwargs laden
+        # diese eut id brauchen wir spaeter um dem component connection object
+        # einen eut hinzuzufuegen
         eut_id = kwargs["pk"]
 
         if form.is_valid():

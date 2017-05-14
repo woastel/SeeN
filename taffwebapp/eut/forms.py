@@ -14,7 +14,7 @@ class Form_Eut_component_connection(forms.ModelForm):
     class Meta:
         model = Component_connection
         fields = [
-            "name",
+            "info",
             "component_count",
             #"eut",
             "component",

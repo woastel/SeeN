@@ -33,7 +33,7 @@ class Eut(models.Model):
 
 
 class Component_connection(models.Model):
-    name = models.CharField(max_length=100)
+    info = models.CharField(max_length=100)
     user_creator = models.ForeignKey(User)
     date_creation = models.DateTimeField()
 
@@ -44,6 +44,6 @@ class Component_connection(models.Model):
 
     def __str__(self):
         return( str(self.id) + "-" +
-                str(self.name) + "-" +
+                str(self.info) + "-" +
                 "EUT: " + str(self.eut) + "-" +
                 "Comp: " + str(self.component.name))
