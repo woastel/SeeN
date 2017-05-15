@@ -51,7 +51,7 @@ class Component_Character_Electrical_Power(models.Model):
 class Component_Character_Thermal(models.Model):
     character_thermal_id = models.AutoField(primary_key=True)
     temperature_max = models.IntegerField()
-    airflow_max = models.IntegerField()
+    airflow_min = models.IntegerField()
 
 # Component Tables Specified
 
