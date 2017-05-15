@@ -9,34 +9,6 @@ class Vendor(models.Model):
     def __str__(self):
         return(str(self.name))
 
-class Component_thermal_charackter(models.Model):
-    max_temperature = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    required_air_flow = models.DecimalField(blank=True, null=True,max_digits=6, decimal_places=2)
-
-class Component_electronik_charackter(models.Model):
-    speed = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    power = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-
-class Component_mechanik_charackter(models.Model):
-    material = models.CharField(blank=True, null=True, max_length=500)
-    weight = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    size_hight = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    size_length = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    size_width = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-
-class Component_cable_type(models.Model):
-    name = models.CharField(max_length=500)
-
-    def __str__(self):
-        return(str(self.name))
-
-class Component_cable_charackter(models.Model):
-    size_length = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    cable_type = models.ForeignKey(Component_cable_type)
-
-class Component_pcie_ctrl_charackter(models.Model):
-    pcie_ctrl_slot_mechanical = models.CharField(max_length=100)
-
 class Component_Type(models.Model):
     name = models.CharField(max_length=100)
 
@@ -57,3 +29,15 @@ class Component(models.Model):
 
     def __str__(self):
         return(str(self.component_type.name) + " - " + str(self.name))
+
+class ComponentMechanicalCharackter(Component):
+    length = models.IntegerField()
+    width = models.IntegerField()
+    high = models.IntegerField()
+
+class ComponentThermalChararckter(ComponentMechanicalCharackter):
+    maxthermperature = models.IntegerField()
+    airflowminimum = models.IntegerField()
+
+class PCIeCtrl(ComponentThermalChararckter):
+    test = models.IntegerField()
