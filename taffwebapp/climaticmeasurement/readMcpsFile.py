@@ -5,6 +5,9 @@ import csv
 
 class readMcpsStatisticFile(object):
 
+
+
+
     def __init__(self, mcpsfile, user="noname"):
 
         self.__file = mcpsfile
@@ -38,7 +41,6 @@ class readMcpsStatisticFile(object):
             print("ERROR: Fileckeck False")
 
         self.__print_sensorDate()
-
 
     def __fileckeck(self, mcpsfile):
         """
@@ -164,7 +166,6 @@ class readMcpsStatisticFile(object):
                     self.__sensorMax_dict["max{}".format(i+1)],
                     self.__sensorValue_dict["value{}".format(i+1)]
                     ))
-
 
     def __get_mcpsInfoLine(self):
         return(self.__mcpsInfoLine)
