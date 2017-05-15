@@ -20,12 +20,26 @@
         <h3 class="panel-title" > Component Types</h3>
       </div>
       <div class="panel-body">
-
-        {% for item in component_type_list %}
-
-          <p> {{item.id}} - {{item.name}} </p>
-
-        {% endfor %}
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Components</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a in componentTypeCountDict %}
+              <tr>
+                <td>
+                  {{a.name}}
+                </td>
+                <td>
+                  {{a.count}}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
 
       </div>
     </div>
@@ -34,10 +48,15 @@
   <div class="col-lg-8">
     <div class="panel panel-default item-box-color1">
       <div class="panel-heading panel-heading-custom1">
-        <h3 class="panel-title" > {{ schedule_object.name }} - ( ID: {{ schedule_object.id }} )</h3>
+        <h3 class="panel-title" > Informations about Components </h3>
       </div>
       <div class="panel-body">
-        <p> test </p>
+        <p> Components Count: </p>
+        <p> Last Added Component: </p>
+        <p> Components with Open Verifications: </p>
+
+
+
       </div>
     </div>
   </div>

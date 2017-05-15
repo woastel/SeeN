@@ -34,6 +34,9 @@ class Component_cable_charackter(models.Model):
     size_length = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
     cable_type = models.ForeignKey(Component_cable_type)
 
+class Component_pcie_ctrl_charackter(models.Model):
+    pcie_ctrl_slot_mechanical = models.CharField(max_length=100)
+
 class Component_Type(models.Model):
     name = models.CharField(max_length=100)
 
@@ -46,14 +49,13 @@ class Component(models.Model):
     vendor = models.ForeignKey(Vendor, models.SET_NULL, null=True)
 
     thermal_charakter_avalible = models.BooleanField(default=True)
-    thermal_charakter = models.ForeignKey(Component_thermal_charackter, models.SET_NULL, null=True)
+    thermal_charakter = models.OneToOneField(Component_thermal_charackter, on_delete=models.CASCADE, primary_key=True,)
     electronic_charakter_avalible = models.BooleanField(default=True)
     electronic_charakter = models.ForeignKey(Component_electronik_charackter, models.SET_NULL, null=True)
     mechanic_charakter_avalible = models.BooleanField(default=True)
     mechanic_charakter = models.ForeignKey(Component_mechanik_charackter, models.SET_NULL, null=True)
     cable_charakter_avalible = models.BooleanField(default=True)
     cable_charakter = models.ForeignKey(Component_cable_charackter, models.SET_NULL, null=True)
-
 
     date_creation = models.DateTimeField()
     date_update = models.DateTimeField()

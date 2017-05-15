@@ -45,7 +45,7 @@
       <tbody>
         {% for item in liste %}
             <tr>
-              <td>{{ item.id }}</td>
+              <td><a href="{% url 'components:component_detail' item.id %}">{{ item.id }}</a></td>
               <td>{{ item.name }}</a></td>
               <td>{{ item.component_type.name }}</td>
               <td>{{ item.vendor.name }}</td>

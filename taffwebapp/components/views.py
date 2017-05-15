@@ -17,30 +17,48 @@ from .models import (
 
 @method_decorator(login_required, name='dispatch')
 class MainView(View):
-    template_name = 'components/index.html'
+    templateName = 'components/index.html'
 
     def get(self, request, *args, **kwargs):
         context = {}
-
-        username_request = self.request.user.username
-
-        context['info_text'] = " Main View is OK "
-        context["component_type_list"] = Component_Type.objects.all()
-
-        component_list_dict = {}
-        for comp in context["component_type_list"]:
-            liste = Component.objects.filter(component_type__name=comp.name)
-            temp_dict = {comp.name:liste}
-            component_list_dict.update(temp_dict)
+        usernameRequest = self.request.user.username
 
 
-        for comptype in component_list_dict:
-            print("Component Type: " + str(comptype))
-            for comp in component_list_dict[comptype]:
-                print("\t - " + str(comp.name))
+        context["componentTypeList"] = Component_Type.objects.all()
+
+        # init a component type dictonary
+        componentTypeCountDict = []
+        # loop throug the component type list
+        # to add items into the component type dictionary
+        for item in context["componentTypeList"]:
+            count1 = Component.objects.filter(component_type=item).count()
+            var_dict ={"name":item.name, "count":count1}
+            componentTypeCountDict.append(var_dict)
+            print(var_dict)
+
+        context["componentTypeCountDict"] = componentTypeCountDict
+        print(context["componentTypeCountDict"])
 
 
-        return render(request, self.template_name, context)
+
+
+
+
+        ## DEBUG
+        #component_list_dict = {}
+        #for comp in context["componentTypeList"]:
+        #    liste = Component.objects.filter(component_type__name=comp.name)
+        #    temp_dict = {comp.name:liste}
+        #    component_list_dict.update(temp_dict)
+
+
+        #for comptype in component_list_dict:
+        #    print("Component Type: " + str(comptype))
+        #    for comp in component_list_dict[comptype]:
+        #        print("\t - " + str(comp.name))
+
+
+        return render(request, self.templateName, context)
 
 @method_decorator(login_required, name='dispatch')
 class Component_List_View(View):

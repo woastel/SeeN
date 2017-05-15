@@ -33,9 +33,83 @@
         <p>Vendor: {{ component.vendor.name }} </p>
         <p>Create: {{ component.date_creation }} | {{ component.user_creator }} </p>
         <p>Updated: {{ component.date_update }} | {{ component.user_updater }} </p>
+        <p>Information: {{component.information}} </p>
+        <p>...</p>
+        <p>Thermal Charakter: {{component.thermal_charakter_avalible }}</p>
+        <p>Electronic Charakter: {{component.electronic_charakter_avalible }}</p>
+        <p>Mechanic Charakter: {{component.mechanic_charakter_avalible }}</p>
+        <p>Cable Charakter: {{component.cable_charakter_avalible }}</p>
       </div>
     </div>
   </div>
 </div>
+
+{% if component.thermal_charakter_avalible == True %}
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Thermal Data</h3>
+        </div>
+        <div class="panel-body">
+          <p>Maximimum Thermperature: {{ component.thermal_charakter.max_temperature }} </p>
+          <p>Required Airflow: {{ component.thermal_charakter.required_air_flow }} </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if component.electronic_charakter_avalible == True %}
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Electronic Data</h3>
+        </div>
+        <div class="panel-body">
+          <p>speed: {{ component.thermal_charakter.speed }} </p>
+          <p>power: {{ component.thermal_charakter.power }} </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if component.mechanic_charakter_avalible == True %}
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Mechanic Date</h3>
+        </div>
+        <div class="panel-body">
+          <p>material: {{ component.mechanic_charakter.material }} </p>
+          <p>weight: {{ component.mechanic_charakter.weight }} </p>
+          <p>size_hight: {{ component.mechanic_charakter.size_hight }} </p>
+          <p>size_length: {{ component.mechanic_charakter.size_length }} </p>
+          <p>size_width: {{ component.mechanic_charakter.size_width }} </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if component.cable_charakter_avalible == True %}
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Cable Data</h3>
+        </div>
+        <div class="panel-body">
+          <p>size_length: {{ component.mechanic_charakter.size_length }} </p>
+          <p>cable_type: {{ component.mechanic_charakter.cable_type.name }} </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
 
 {% endblock %}
