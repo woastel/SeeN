@@ -49,7 +49,7 @@ class Component(models.Model):
     vendor = models.ForeignKey(Vendor, models.SET_NULL, null=True)
 
     thermal_charakter_avalible = models.BooleanField(default=True)
-    thermal_charakter = models.OneToOneField(Component_thermal_charackter, on_delete=models.CASCADE, primary_key=True,)
+    thermal_charakter = models.ForeignKey(Component_thermal_charackter, models.SET_NULL, null=True)
     electronic_charakter_avalible = models.BooleanField(default=True)
     electronic_charakter = models.ForeignKey(Component_electronik_charackter, models.SET_NULL, null=True)
     mechanic_charakter_avalible = models.BooleanField(default=True)
@@ -65,9 +65,4 @@ class Component(models.Model):
 
 
     def __str__(self):
-        return(
-                str(self.id) + "-" +
-                str(self.component_type) + "- : " +
-                str(self.name)
-
-            )
+        return(str(self.component_type.name) + " - " + str(self.name))

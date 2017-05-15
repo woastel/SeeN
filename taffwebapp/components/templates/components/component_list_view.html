@@ -43,8 +43,10 @@
         </tr>
       </thead>
       <tbody>
-        {% for item in liste %}
+        {% for item in component_list %}
             <tr>
+
+
               <td><a href="{% url 'components:component_detail' item.id %}">{{ item.id }}</a></td>
               <td>{{ item.name }}</a></td>
               <td>{{ item.component_type.name }}</td>
@@ -68,6 +70,7 @@
               <th>{{ item.date_update }}</th>
               <th>{{ item.user_creator }}</th>
               <th>{{ item.user_updater }}</th>
+
             </tr>
         {% endfor %}
       </tbody>

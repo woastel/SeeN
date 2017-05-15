@@ -12,28 +12,29 @@ from .models import (
 
 class Form_Component(forms.ModelForm):
 
-    vendor = forms.ModelChoiceField(
-                                    queryset=Vendor.objects.all(),
+    vendor = forms.ModelChoiceField(queryset=Vendor.objects.all(),
                                     empty_label="(Nothing)",
                                     required=False)
-    thermal_charakter = forms.ModelChoiceField(
-                                    queryset=Component_thermal_charackter.objects.all(),
-                                    empty_label="(Nothing)",
-                                    required=False)
-    electronic_charakter = forms.ModelChoiceField(
-                                    queryset=Component_electronik_charackter.objects.all(),
-                                    empty_label="(Nothing)",
-                                    required=False)
-    mechanic_charakter = forms.ModelChoiceField(
-                                    queryset=Component_mechanik_charackter.objects.all(),
-                                    empty_label="(Nothing)",
-                                    required=False)
-    cable_charakter = forms.ModelChoiceField(
-                                    queryset=Component_cable_charackter.objects.all(),
-                                    empty_label="(Nothing)",
-                                    required=False)
+
     information = forms.CharField(required=False,
-                                widget=forms.Textarea)
+                                  widget=forms.Textarea)
+    #thermal_charakter = forms.ModelChoiceField(
+    #                                queryset=Component_thermal_charackter.objects.all(),
+    #                                empty_label="(Nothing)",
+    #                                required=False)
+    #electronic_charakter = forms.ModelChoiceField(
+    #                                queryset=Component_electronik_charackter.objects.all(),
+    #                                empty_label="(Nothing)",
+    #                                required=False)
+    #mechanic_charakter = forms.ModelChoiceField(
+    #                                queryset=Component_mechanik_charackter.objects.all(),
+    #                                empty_label="(Nothing)",
+    #                                required=False)
+    #cable_charakter = forms.ModelChoiceField(
+    #                                queryset=Component_cable_charackter.objects.all(),
+    #                                empty_label="(Nothing)",
+    #                                required=False)
+
 
     class Meta:
         model = Component
@@ -43,13 +44,13 @@ class Form_Component(forms.ModelForm):
             "vendor",
 
             "thermal_charakter_avalible",
-            "thermal_charakter",
+            #"thermal_charakter",
             "electronic_charakter_avalible",
-            "electronic_charakter",
+            #"electronic_charakter",
             "mechanic_charakter_avalible",
-            "mechanic_charakter",
+            #"mechanic_charakter",
             "cable_charakter_avalible",
-            "cable_charakter",
+            #"cable_charakter",
 
             "date_creation",
             "date_update",

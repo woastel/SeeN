@@ -68,8 +68,8 @@ class Component_List_View(View):
         username_request = self.request.user.username
         context = {}
 
-        context["liste"] = Component.objects.all()
-        print(context["liste"])
+        context["component_list"] = Component.objects.all()
+        print(context["component_list"])
 
         return render(request, self.template_name, context)
 
@@ -148,25 +148,6 @@ class Component_Create_View(View):
                     instance_cable_charackter.save()
                     print(type(instance_cable_charackter))
                     instance_component.cable_charakter = instance_cable_charackter
-
-
-            # f = "{:40} - {:40}"
-            # print(f.format("Name: ", instance_component.name))
-            # print(f.format("component_type: ", instance_component.component_type.name))
-            # print(f.format("vendor: ", instance_component.vendor.name))
-            # print(f.format("thermal_charakter_avalible: ", instance_component.thermal_charakter_avalible))
-            # print(f.format("thermal_charakter: ", instance_component.thermal_charakter))
-            # print(f.format("electronic_charakter_avalible: ", instance_component.electronic_charakter_avalible))
-            # print(f.format("electronic_charakter: ", instance_component.electronic_charakter))
-            # print(f.format("mechanic_charakter_avalible: ", instance_component.mechanic_charakter_avalible))
-            # print(f.format("mechanic_charakter: ", instance_component.mechanic_charakter))
-            # print(f.format("cable_charakter_avalible: ", instance_component.cable_charakter_avalible))
-            # print(f.format("cable_charakter: ", instance_component.cable_charakter))
-            # print(f.format("date_creation: ", instance_component.date_creation))
-            # print(f.format("date_update: ", instance_component.date_update))
-            # print(f.format("user_creator: ", instance_component.user_creator.username))
-            # print(f.format("user_updater: ", instance_component.user_updater.username))
-            # print(f.format("information: ", instance_component.information))
 
             instance_component.save()
 
