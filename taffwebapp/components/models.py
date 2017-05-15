@@ -48,15 +48,6 @@ class Component(models.Model):
     component_type = models.ForeignKey(Component_Type)
     vendor = models.ForeignKey(Vendor, models.SET_NULL, null=True)
 
-    thermal_charakter_avalible = models.BooleanField(default=True)
-    thermal_charakter = models.ForeignKey(Component_thermal_charackter, models.SET_NULL, null=True)
-    electronic_charakter_avalible = models.BooleanField(default=True)
-    electronic_charakter = models.ForeignKey(Component_electronik_charackter, models.SET_NULL, null=True)
-    mechanic_charakter_avalible = models.BooleanField(default=True)
-    mechanic_charakter = models.ForeignKey(Component_mechanik_charackter, models.SET_NULL, null=True)
-    cable_charakter_avalible = models.BooleanField(default=True)
-    cable_charakter = models.ForeignKey(Component_cable_charackter, models.SET_NULL, null=True)
-
     date_creation = models.DateTimeField()
     date_update = models.DateTimeField()
     user_creator = models.ForeignKey(User)
