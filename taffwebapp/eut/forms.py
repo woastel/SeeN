@@ -4,12 +4,7 @@ from components.models import Component
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
 class Form_Eut_component_connection(forms.ModelForm):
-    #   component = forms.ModelMultipleChoiceField(queryset=Component.objects.all(),
-    #                                               required=False,
-    #                                               widget=FilteredSelectMultiple(
-    #                                                   ('tags'),
-    #                                                   False,
-    #                                                   ))
+    component = forms.ModelChoiceField(queryset=Component.objects.order_by("name"))
 
     class Meta:
         model = Component_connection
@@ -20,14 +15,6 @@ class Form_Eut_component_connection(forms.ModelForm):
             "component",
             ]
 
-
-
-
-    class Media:
-        css = {
-            'all':['admin/css/widgets.css',
-                   'css/uid-manage-form.css'],
-        }
 
 class Form_Eut(forms.ModelForm):
 

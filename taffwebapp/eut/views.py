@@ -65,7 +65,6 @@ class Eut_list_view(View):
 
         return render(request, self.template_name, context)
 
-
 @method_decorator(login_required, name='dispatch')
 class Eut_detail_view(View):
     form_add_component_class = Form_Eut_component_connection

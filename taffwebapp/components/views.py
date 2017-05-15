@@ -119,35 +119,34 @@ class Component_Create_View(View):
         form_mechanik_charackter = self.form_class_mechanik_charackter(request.POST)
         form_cable_charackter = self.form_class_cable_charackter(request.POST)
 
-
         if form_component.is_valid():
             instance_component = form_component.save(commit=False)
             instance_component.created_user = request.user
 
-            if instance_component.thermal_charakter_avalible is True:
-                if form_thermal_charackter.is_valid():
-                    instance_thermal_charackter = form_thermal_charackter.save(commit=False)
-                    instance_thermal_charackter.save()
-                    instance_component.thermal_charakter = instance_thermal_charackter
+            # if instance_component.thermal_charakter_avalible is True:
+            if form_thermal_charackter.is_valid():
+                instance_thermal_charackter = form_thermal_charackter.save(commit=False)
+                instance_thermal_charackter.save()
+                instance_component.thermal_charakter = instance_thermal_charackter
 
-            if instance_component.electronic_charakter_avalible == True:
-                if form_electronik_charackter.is_valid():
-                    instance_electronik_charackter = form_electronik_charackter.save(commit=False)
-                    instance_electronik_charackter.save()
-                    instance_component.electronic_charakter = instance_electronik_charackter
+            # if instance_component.electronic_charakter_avalible == True:
+            if form_electronik_charackter.is_valid():
+                instance_electronik_charackter = form_electronik_charackter.save(commit=False)
+                instance_electronik_charackter.save()
+                instance_component.electronic_charakter = instance_electronik_charackter
 
-            if instance_component.mechanic_charakter_avalible == True:
-                if form_mechanik_charackter.is_valid():
-                    instance_mechanic_charackter = form_mechanik_charackter.save(commit=False)
-                    instance_mechanic_charackter.save()
-                    instance_component.mechanic_charakter = instance_mechanic_charackter
+            # if instance_component.mechanic_charakter_avalible == True:
+            if form_mechanik_charackter.is_valid():
+                instance_mechanic_charackter = form_mechanik_charackter.save(commit=False)
+                instance_mechanic_charackter.save()
+                instance_component.mechanic_charakter = instance_mechanic_charackter
 
-            if instance_component.cable_charakter_avalible == True:
-                if form_cable_charackter.is_valid():
-                    instance_cable_charackter = form_cable_charackter.save(commit=False)
-                    instance_cable_charackter.save()
-                    print(type(instance_cable_charackter))
-                    instance_component.cable_charakter = instance_cable_charackter
+            # if instance_component.cable_charakter_avalible == True:
+            if form_cable_charackter.is_valid():
+                instance_cable_charackter = form_cable_charackter.save(commit=False)
+                instance_cable_charackter.save()
+                print(type(instance_cable_charackter))
+                instance_component.cable_charakter = instance_cable_charackter
 
             instance_component.save()
 
