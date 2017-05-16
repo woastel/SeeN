@@ -39,7 +39,17 @@ class Form_Component_Type(forms.ModelForm):
 class Form_Chassis(forms.ModelForm):
     class Meta:
         model = Chassis
-        fields = '__all__'
+        # fields = '__all__'
+        fields = [  'name',
+                    'component_type',
+                    'vendor',
+                    'material',
+                    'size_x',
+                    'size_y',
+                    'size_z',
+                    'model',]
+
+        # exclude = []
 
 class Form_ChassisAddOn(forms.ModelForm):
     class Meta:

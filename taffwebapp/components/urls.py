@@ -8,8 +8,8 @@ urlpatterns = [
     # incomming tag is /eut/
 
     url(r'^index/$',                     views.MainView.as_view() , name='index'),
-    url(r'^complist/$',                  views.MainView.as_view() , name='component_list'),
-    url(r'^comp/(?P<pk>[0-9]+)/$',       views.MainView.as_view(), name='component_detail'),
+    url(r'^complist/$',                  views.List_Component_View.as_view() , name='component_list'),
+    url(r'^comp/(?P<pk>[0-9]+)/$',       views.Detail_Component_View.as_view(), name='component_detail'),
 
     # Create types (only used by admin )
     url(r'^comp/componentType/add/$',   views.Create_Component_Type_View.as_view() ,       name='create_componentType'),

@@ -30,8 +30,6 @@ class Component(models.Model):
     user_updater= models.ForeignKey(User, related_name='%(class)s_requests_created')
     information = models.TextField(max_length=5000)
 
-    def __str__(self):
-        return(str(self.component_type.name) + " - " + str(self.name))
 
 # Component Character Tables
 
