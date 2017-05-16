@@ -1,5 +1,6 @@
 
 
 accounts/__pycache__/*.pyc
+climaticmeasurement/__pycache__/
 
 db.sqlite3
