@@ -260,6 +260,30 @@ class Create_ChassisAddOn_View(View):
         # now return the render object with template name and context
         return render(request, self.templateName, context)
 
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
+
 @method_decorator(login_required, name='dispatch')
 class Create_Motherboard_View(View):
     form_class = forms.Form_Motherboard
