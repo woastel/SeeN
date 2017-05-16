@@ -47,7 +47,8 @@ class Form_Chassis(forms.ModelForm):
                     'size_x',
                     'size_y',
                     'size_z',
-                    'model',]
+                    'model',
+                    'information']
 
         # exclude = []
 
