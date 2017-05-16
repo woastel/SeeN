@@ -3,36 +3,28 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views import generic, View
 from django.http import HttpResponse, HttpResponseRedirect
-# from django.views.generic.edit import CreateView
 from django.views.generic.edit import FormView
-# Create your views here.
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
-
-import json
-
 from .forms import (
     Create_Schedule_Form,
     Create_CertificationType_Form,
     Create_ScheduleItemCertification_Form,
     Create_MeasurementType_Form,
     Create_ScheduleItemMeasurement_Form,
-    Create_ScheduleItemMaterial_Form
-)
-
+    Create_ScheduleItemMaterial_Form)
 from .models import (
     Schedule,
     ScheduleItem_Material,
     ScheduleItem_Measurement,
     ScheduleItem_Certification,
     Measurement_Type,
-    Certification_Type )
-
+    Certification_Type)
 from system.models import Milestone, MSDBConnention
-
 from datetime import datetime
 import datetime as datetimelib
 from django.core.urlresolvers import reverse
+import json
 
 
 @method_decorator(login_required, name='dispatch')
@@ -45,9 +37,6 @@ class MainView(View):
         schedule_list = Schedule.objects.filter(created_user__username=username_request)
         context = {'schedule_list': reversed(schedule_list)}
         return render(request, self.template_name, context)
-
-
-
 
 @method_decorator(login_required, name='dispatch')
 class Create_Schedule_View(View):
@@ -111,7 +100,6 @@ class Delete_Schedule_View(DeleteView):
         context.update(self.info_text)
         return context
 
-
 @method_decorator(login_required, name='dispatch')
 class Create_CertificationType_View(View):
     form_class = Create_CertificationType_Form
@@ -153,7 +141,6 @@ class Update_CertificationType_View(UpdateView):
         context.update(self.info_text)
         return context
 
-
 @method_decorator(login_required, name='dispatch')
 class Delete_CertificationType_View(DeleteView):
     model = ScheduleItem_Certification
@@ -167,7 +154,6 @@ class Delete_CertificationType_View(DeleteView):
         context.update(self.panel_titel)
         context.update(self.info_text)
         return context
-
 
 @method_decorator(login_required, name='dispatch')
 class Create_ScheduleItemCertification_View(View):
@@ -286,8 +272,6 @@ class Delete_ScheduleItemCertification_View(DeleteView):
         context.update(self.info_text)
         return context
 
-
-
 @method_decorator(login_required, name='dispatch')
 class Create_MeasurementType_View(View):
     form_class = Create_MeasurementType_Form
@@ -342,8 +326,6 @@ class Delete_MeasurementType_View(DeleteView):
         context.update(self.panel_titel)
         context.update(self.info_text)
         return context
-
-
 
 @method_decorator(login_required, name='dispatch')
 class Create_ScheduleItemMeasurement_View(View):
@@ -466,8 +448,6 @@ class Delete_ScheduleItemMeasurement_View(DeleteView):
         context.update(self.info_text)
         return context
 
-
-
 @method_decorator(login_required, name='dispatch')
 class Create_ScheduleItemMaterial_View(View):
     form_class = Create_ScheduleItemMaterial_Form
@@ -542,12 +522,6 @@ class Delete_ScheduleItemMaterial_View(DeleteView):
         context.update(self.panel_titel)
         context.update(self.info_text)
         return context
-
-
-
-
-
-
 
 @method_decorator(login_required, name='dispatch')
 class View_Schedule_objects(View):
@@ -711,7 +685,7 @@ class View_a_schedule(View):
 
 
         group_item_list = []
-        
+
         group_item_list.append({"id":0, "content":"MS"})
         group_item_list.append({"id":1, "content":"Measurements"})
         group_item_list.append({"id":2, "content":"Certifications"})
@@ -731,9 +705,3 @@ class View_a_schedule(View):
         context["schedule_items"] = json.dumps(schedule_item_list)
         context["groups_items"] = json.dumps(group_item_list)
         return render(request, self.template_name, context)
-
-
-
-
-
-##

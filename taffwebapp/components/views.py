@@ -7,14 +7,24 @@ from django.core.urlresolvers import reverse
 from . import forms
 from datetime import datetime
 from .models import (
-                Component,
-                Component_Type,
-                Component_cable_charackter,
-                Component_thermal_charackter,
-                Component_mechanik_charackter,
-                Component_electronik_charackter)
+        Component,
+        Chassis,
+        ChassisAddOn,
+        Motherboard,
+        Cpu,
+        Memory,
+        PSU,
+        HDD,
+        HeatSink,
+        Fan,
+        Cable,
+        Pcba,
+        Pcie_Ctrl)
 
 
+#
+# Main View
+#-------------------------
 @method_decorator(login_required, name='dispatch')
 class MainView(View):
     templateName = 'components/index.html'
@@ -23,158 +33,453 @@ class MainView(View):
         context = {}
         usernameRequest = self.request.user.username
 
-
-        context["componentTypeList"] = Component_Type.objects.all()
-
-        # init a component type dictonary
-        componentTypeCountDict = []
-        # loop throug the component type list
-        # to add items into the component type dictionary
-        for item in context["componentTypeList"]:
-            count1 = Component.objects.filter(component_type=item).count()
-            var_dict ={"name":item.name, "count":count1}
-            componentTypeCountDict.append(var_dict)
-            print(var_dict)
-
-        context["componentTypeCountDict"] = componentTypeCountDict
-        print(context["componentTypeCountDict"])
-
-
-
-
-
-
-        ## DEBUG
-        #component_list_dict = {}
-        #for comp in context["componentTypeList"]:
-        #    liste = Component.objects.filter(component_type__name=comp.name)
-        #    temp_dict = {comp.name:liste}
-        #    component_list_dict.update(temp_dict)
-
-
-        #for comptype in component_list_dict:
-        #    print("Component Type: " + str(comptype))
-        #    for comp in component_list_dict[comptype]:
-        #        print("\t - " + str(comp.name))
-
-
         return render(request, self.templateName, context)
 
 @method_decorator(login_required, name='dispatch')
-class Component_List_View(View):
-    template_name = 'components/component_list_view.html'
+class List_Component_View(View):
+    templateName = 'components/component_list_view.html'
+    panel_titel = "Component List View"
 
     def get(self, request, *args, **kwargs):
-        username_request = self.request.user.username
+        # context that schould be render
         context = {}
 
         context["component_list"] = Component.objects.all()
         print(context["component_list"])
-
-        return render(request, self.template_name, context)
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
 
 @method_decorator(login_required, name='dispatch')
-class Component_Create_View(View):
-    form_class_component = forms.Form_Component
-    form_class_thermal_charackter = forms.Form_Component_thermal_charackter
-    form_class_electronik_charackter = forms.Form_Component_electronik_charackter
-    form_class_mechanik_charackter = forms.Form_Component_mechanik_charackter
-    form_class_cable_charackter = forms.Form_Component_cable_charackter
-
-    template_name = 'components/component_create.html'
+class Detail_Component_View(View):
+    templateName = 'components/component_detail_view.html'
+    panel_titel = "Component Detail View"
 
     def get(self, request, *args, **kwargs):
-
+        # context that schould be render
         context = {}
+        var_component_id = kwargs["pk"]
+        var_component = Component.objects.filter(component_id=var_component_id)
+        context['component'] = var_component
+        print(context['component'])
+        a = Component(var_component)
 
-        initial = {
-            "user_creator" : request.user,
-            "user_updater" : request.user,
-            "date_creation" : datetime.now(),
-            "date_update" : datetime.now(),}
 
 
-        form_component = self.form_class_component(initial=initial)
-        context.update({'form_component': form_component})
 
-        form_thermal_charackter = self.form_class_thermal_charackter()
-        context.update({'form_thermal_charackter': form_thermal_charackter})
+        try:
+            chassis = a.chassis
+        except AttributeError as error_text:
+            print("DEBUG: object isnt a chassis")
+            print(error_text)
 
-        form_electronik_charackter = self.form_class_electronik_charackter()
-        context.update({'form_electronik_charackter': form_electronik_charackter})
+        try:
+            chassisAddOn = a.chassisaddon
+        except AttributeError as error_text:
+            print("DEBUG: object isnt a Chassis Add ON")
+            print(error_text)
 
-        form_mechanik_charackter = self.form_class_mechanik_charackter()
-        context.update({'form_mechanik_charackter': form_mechanik_charackter})
+        try:
+            chassisAddOn = a.motherboard
+        except AttributeError as error_text:
+            print("DEBUG: object isnt a Chassis Add ON")
+            print(error_text)
 
-        form_cable_charackter = self.form_class_cable_charackter()
-        context.update({'form_cable_charackter': form_cable_charackter})
 
-        return render(request, self.template_name, context)
 
+
+
+
+
+
+
+
+
+
+        print(kwargs)
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+
+#
+# Create Types + Vendor
+#-------------------------
+@method_decorator(login_required, name='dispatch')
+class Create_Component_Type_View(View):
+    form_class = forms.Form_Component_Type
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new Component Type"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
 
     def post(self, request, *args, **kwargs):
-        form_component = self.form_class_component(request.POST)
-        form_thermal_charackter = self.form_class_thermal_charackter(request.POST)
-        form_electronik_charackter = self.form_class_electronik_charackter(request.POST)
-        form_mechanik_charackter = self.form_class_mechanik_charackter(request.POST)
-        form_cable_charackter = self.form_class_cable_charackter(request.POST)
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
 
-        if form_component.is_valid():
-            instance_component = form_component.save(commit=False)
-            instance_component.created_user = request.user
-
-            # if instance_component.thermal_charakter_avalible is True:
-            if form_thermal_charackter.is_valid():
-                instance_thermal_charackter = form_thermal_charackter.save(commit=False)
-                instance_thermal_charackter.save()
-                instance_component.thermal_charakter = instance_thermal_charackter
-
-            # if instance_component.electronic_charakter_avalible == True:
-            if form_electronik_charackter.is_valid():
-                instance_electronik_charackter = form_electronik_charackter.save(commit=False)
-                instance_electronik_charackter.save()
-                instance_component.electronic_charakter = instance_electronik_charackter
-
-            # if instance_component.mechanic_charakter_avalible == True:
-            if form_mechanik_charackter.is_valid():
-                instance_mechanic_charackter = form_mechanik_charackter.save(commit=False)
-                instance_mechanic_charackter.save()
-                instance_component.mechanic_charakter = instance_mechanic_charackter
-
-            # if instance_component.cable_charakter_avalible == True:
-            if form_cable_charackter.is_valid():
-                instance_cable_charackter = form_cable_charackter.save(commit=False)
-                instance_cable_charackter.save()
-                print(type(instance_cable_charackter))
-                instance_component.cable_charakter = instance_cable_charackter
-
-            instance_component.save()
-
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            ## -- this instance have no creator instance.created_user = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
             return HttpResponseRedirect(reverse('components:index'))
 
+        # if form is not valid - return the form object like the
+        #  get method
         context = {'form': form}
         context.update(self.panel_titel)
         return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
-class Component_Detail_View(View):
-    template_name = 'components/component_detail_view.html'
+class Create_Vendor_View(View):
+    form_class = forms.Form_Vendor
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new Vendor"
 
     def get(self, request, *args, **kwargs):
+        # context that schould be render
         context = {}
-        context["alert_danger_avalible"] = False
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
 
-        # get the component id from the kwargs -- key = "pk"
-        component_id = kwargs["pk"]
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
 
-        component = Component.objects.filter(id=component_id)
-        try:
-            component = component[0]
-            context["component"] = component
-        except:
-            context["alert_danger_avalible"] = True
-            context["alert_danger"] = "Error: Component List is empty"
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            ## -- this instance have no creator instance.created_user = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
 
-        username_request = self.request.user.username
-
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
         return render(request, self.template_name, context)
+
+
+#
+# Create Components
+#-------------------------
+@method_decorator(login_required, name='dispatch')
+class Create_Chassis_View(View):
+    form_class = forms.Form_Chassis
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new Chassis"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
+
+@method_decorator(login_required, name='dispatch')
+class Create_ChassisAddOn_View(View):
+    form_class = forms.Form_ChassisAddOn
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new Chassis Add On"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
+
+@method_decorator(login_required, name='dispatch')
+class Create_Motherboard_View(View):
+    form_class = forms.Form_Motherboard
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new Motherboard"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+@method_decorator(login_required, name='dispatch')
+class Create_CPU_View(View):
+    form_class = forms.Form_Cpu
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new CPU"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+@method_decorator(login_required, name='dispatch')
+class Create_Memory_View(View):
+    form_class = forms.Form_Memory
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new Memory"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+@method_decorator(login_required, name='dispatch')
+class Create_PSU_View(View):
+    form_class = forms.Form_PSU
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new PSU"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+@method_decorator(login_required, name='dispatch')
+class Create_HDD_View(View):
+    form_class = forms.Form_HDD
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new HDD"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+@method_decorator(login_required, name='dispatch')
+class Create_HeatSink_View(View):
+    form_class = forms.Form_HeatSink
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new Heatsink"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+@method_decorator(login_required, name='dispatch')
+class Create_Fan_View(View):
+    form_class = forms.Form_Fan
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new Fan"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+@method_decorator(login_required, name='dispatch')
+class Create_Cable_View(View):
+    form_class = forms.Form_Cable
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new Cable"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+@method_decorator(login_required, name='dispatch')
+class Create_Pcba_View(View):
+    form_class = forms.Form_Pcba
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new PCBA"
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)
+
+@method_decorator(login_required, name='dispatch')
+class Create_PcieCtrl_View(View):
+    form_class = forms.Form_Pcie_Ctrl
+    templateName = 'components/component_create.html'
+    panel_titel = "Create a new PCIe Ctrl."
+
+    def get(self, request, *args, **kwargs):
+        # context that schould be render
+        context = {}
+        # inital date for the form
+        initial = {}
+        # generate the form with the initals
+        form = self.form_class(initial=initial)
+        # add the form to the context
+        context.update({'form': form})
+        # add the panel titel to the context
+        context.update({'panel_titel': self.panel_titel})
+        # now return the render object with template name and context
+        return render(request, self.templateName, context)

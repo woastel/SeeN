@@ -2,7 +2,7 @@
 
 {% block components_body %}
 
-  <h1> Create a Component </h1>
+  <h1> Create Component </h1>
 
 
   <div class="row">
@@ -17,8 +17,7 @@
 
             {% csrf_token %}
 
-            <h3> form component </h3>
-            {% for field in form_component %}
+            {% for field in form %}
                 <!-- ein kleines script um die datetime picker zu initialisieren -->
                 <script>
                     $(function () {
@@ -27,77 +26,6 @@
                         });
                     });
                 </script>
-
-                <div class="form-group">
-                  <div class="col-lg-offset-1 col-lg-4">
-                    <label class="control-label">{{ field.label_tag }}</label>
-                  </div>
-                  <div class="col-lg-6">{{ field}}</div>
-                  <div class="col-lg-1">
-                    <span class="text-danger small">{{ field.errors }}</span>
-                  </div>
-                </div>
-
-            {% endfor %}
-
-            <h3> form_thermal_charackter </h3>
-            {% for field in form_thermal_charackter %}
-                <!-- ein kleines script um die datetime picker zu initialisieren -->
-
-                <div class="form-group">
-                  <div class="col-lg-offset-1 col-lg-4">
-                    <label class="control-label">{{ field.label_tag }}</label>
-                  </div>
-                  <div class="col-lg-6">{{ field}}</div>
-                  <div class="col-lg-1">
-                    <span class="text-danger small">{{ field.errors }}</span>
-                  </div>
-                </div>
-
-            {% endfor %}
-
-            <h3> form_electronik_charackter </h3>
-            {% for field in form_electronik_charackter %}
-                <!-- ein kleines script um die datetime picker zu initialisieren -->
-
-                <div class="form-group">
-                  <div class="col-lg-offset-1 col-lg-4">
-                    <label class="control-label">{{ field.label_tag }}</label>
-                  </div>
-                  <div class="col-lg-6">{{ field}}</div>
-                  <div class="col-lg-1">
-                    <span class="text-danger small">{{ field.errors }}</span>
-                  </div>
-                </div>
-
-            {% endfor %}
-
-            <h3> form_mechanik_charackter </h3>
-            {% for field in form_mechanik_charackter %}
-                <!-- ein kleines script um die datetime picker zu initialisieren -->
-                <script>
-                    $(function () {
-                        $('.datetime-input').datetimepicker({
-                            format:'YYYY-MM-DD HH:mm:ss'
-                        });
-                    });
-                </script>
-
-                <div class="form-group">
-                  <div class="col-lg-offset-1 col-lg-4">
-                    <label class="control-label">{{ field.label_tag }}</label>
-                  </div>
-                  <div class="col-lg-6">{{ field}}</div>
-                  <div class="col-lg-1">
-                    <span class="text-danger small">{{ field.errors }}</span>
-                  </div>
-                </div>
-
-            {% endfor %}
-
-            <h3> form_cable_charackter </h3>
-            {% for field in form_cable_charackter %}
-                <!-- ein kleines script um die datetime picker zu initialisieren -->
 
                 <div class="form-group">
                   <div class="col-lg-offset-1 col-lg-4">

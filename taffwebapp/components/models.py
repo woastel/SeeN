@@ -9,41 +9,17 @@ class Vendor(models.Model):
     def __str__(self):
         return(str(self.name))
 
-class Component_thermal_charackter(models.Model):
-    max_temperature = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    required_air_flow = models.DecimalField(blank=True, null=True,max_digits=6, decimal_places=2)
-
-class Component_electronik_charackter(models.Model):
-    speed = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    power = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-
-class Component_mechanik_charackter(models.Model):
-    material = models.CharField(blank=True, null=True, max_length=500)
-    weight = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    size_hight = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    size_length = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    size_width = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-
-class Component_cable_type(models.Model):
-    name = models.CharField(max_length=500)
-
-    def __str__(self):
-        return(str(self.name))
-
-class Component_cable_charackter(models.Model):
-    size_length = models.DecimalField(blank=True, null=True, max_digits=6, decimal_places=2)
-    cable_type = models.ForeignKey(Component_cable_type)
-
-class Component_pcie_ctrl_charackter(models.Model):
-    pcie_ctrl_slot_mechanical = models.CharField(max_length=100)
-
 class Component_Type(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return(str(self.name))
 
+# Component Table
 class Component(models.Model):
+    component_id = models.AutoField(primary_key=True)
+
+
     name = models.CharField(max_length=100)
     component_type = models.ForeignKey(Component_Type)
     vendor = models.ForeignKey(Vendor, models.SET_NULL, null=True)
@@ -55,5 +31,76 @@ class Component(models.Model):
     information = models.TextField(max_length=5000)
 
 
-    def __str__(self):
-        return(str(self.component_type.name) + " - " + str(self.name))
+# Component Character Tables
+
+class Component_Character_Mechanical(models.Model):
+    character_mechaical_id = models.AutoField(primary_key=True)
+    material = models.CharField(max_length=100)
+    size_x = models.DecimalField(max_digits=10, decimal_places=2)
+    size_y = models.DecimalField(max_digits=10, decimal_places=2)
+    size_z = models.DecimalField(max_digits=10, decimal_places=2)
+
+class Component_Character_Electrical_Power(models.Model):
+    character_electrical_id = models.AutoField(primary_key=True)
+    power_max = models.DecimalField(max_digits=10, decimal_places=2)
+    power_typical = models.DecimalField(max_digits=10, decimal_places=2)
+    power_minimal = models.DecimalField(max_digits=10, decimal_places=2)
+
+class Component_Character_Thermal(models.Model):
+    character_thermal_id = models.AutoField(primary_key=True)
+    temperature_max = models.IntegerField()
+    airflow_min = models.IntegerField()
+
+# Component Tables Specified
+
+class Chassis       (Component, Component_Character_Mechanical):
+    model = models.IntegerField()
+
+class ChassisAddOn  (Component, Component_Character_Mechanical):
+    model = models.IntegerField()
+
+class Motherboard   (Component, Component_Character_Mechanical, Component_Character_Electrical_Power, Component_Character_Thermal):
+    pcie_slot_count = models.IntegerField()
+    cpu_slot_count = models.IntegerField()
+    psu_slot_count = models.IntegerField()
+    memory_slot_count = models.IntegerField()
+
+class Cpu           (Component, Component_Character_Mechanical, Component_Character_Electrical_Power, Component_Character_Thermal):
+    cores = models.IntegerField()
+    TDP = models.IntegerField()
+    frequency = models.IntegerField()
+    klasse = models.IntegerField()
+
+class Memory        (Component, Component_Character_Mechanical, Component_Character_Electrical_Power, Component_Character_Thermal):
+    capacity = models.IntegerField()
+    ddr_version = models.IntegerField()
+    speed_frequency = models.IntegerField()
+
+class PSU           (Component, Component_Character_Mechanical, Component_Character_Electrical_Power, Component_Character_Thermal):
+    power_class = models.IntegerField()
+    formfactor = models.IntegerField()
+
+class HDD           (Component, Component_Character_Mechanical, Component_Character_Electrical_Power, Component_Character_Thermal):
+    capacity = models.IntegerField()
+    technology = models.IntegerField()
+
+class HeatSink      (Component, Component_Character_Mechanical):
+    technology = models.IntegerField()
+
+class Fan           (Component, Component_Character_Mechanical):
+    maximum_rpm = models.IntegerField()
+    maximum_airflow = models.IntegerField()
+    maximum_pressure = models.IntegerField()
+
+class Cable         (Component, Component_Character_Mechanical):
+    cable_type = models.IntegerField()
+    lenght = models.IntegerField()
+
+class Pcba          (Component, Component_Character_Mechanical):
+    pcba_type = models.IntegerField()
+
+class Pcie_Ctrl     (Component, Component_Character_Mechanical):
+    pcie_spec = models.IntegerField()
+    pcie_lanes_electrical = models.IntegerField()
+    pcie_lanes_mechanical = models.IntegerField()
+    pcie_ctrl_type = models.IntegerField()

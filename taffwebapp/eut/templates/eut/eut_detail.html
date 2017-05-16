@@ -100,7 +100,7 @@
                   <tr>
                     <td>{{ item.info }}</td>
                     <td>{{ item.component_count }}</td>
-                    <td><a href="{% url 'components:component_detail' item.component.id %}">
+                    <td><a href="{% url 'components:component_detail' item.component.component_id %}">
                         {{ item.component.name }}</a></td>
                     <td>{{ item.component.component_type.name }}</td>
                     <td> Delete </td>

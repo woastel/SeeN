@@ -1,120 +1,107 @@
 from django import forms
 from .models import (
-    Component,
+    Vendor,
     Component_Type,
-    Component_cable_type,
-    Component_cable_charackter,
-    Component_thermal_charackter,
-    Component_mechanik_charackter,
-    Component_electronik_charackter,
-    Vendor
+    Component,
+
+    Component_Character_Thermal,
+    Component_Character_Mechanical,
+    Component_Character_Electrical_Power,
+
+    Chassis,
+    ChassisAddOn,
+    Motherboard,
+    Cpu,
+    Memory,
+    PSU,
+    HDD,
+    HeatSink,
+    Fan,
+    Cable,
+    Pcba,
+    Pcie_Ctrl
 )
 
-class Form_Component(forms.ModelForm):
 
-    vendor = forms.ModelChoiceField(queryset=Vendor.objects.all(),
-                                    empty_label="(Nothing)",
-                                    required=False)
-
-    information = forms.CharField(required=False,
-                                  widget=forms.Textarea)
-    #thermal_charakter = forms.ModelChoiceField(
-    #                                queryset=Component_thermal_charackter.objects.all(),
-    #                                empty_label="(Nothing)",
-    #                                required=False)
-    #electronic_charakter = forms.ModelChoiceField(
-    #                                queryset=Component_electronik_charackter.objects.all(),
-    #                                empty_label="(Nothing)",
-    #                                required=False)
-    #mechanic_charakter = forms.ModelChoiceField(
-    #                                queryset=Component_mechanik_charackter.objects.all(),
-    #                                empty_label="(Nothing)",
-    #                                required=False)
-    #cable_charakter = forms.ModelChoiceField(
-    #                                queryset=Component_cable_charackter.objects.all(),
-    #                                empty_label="(Nothing)",
-    #                                required=False)
-
-
+# Forms for types this schould only use by the admin
+class Form_Vendor(forms.ModelForm):
     class Meta:
-        model = Component
-        fields = [
-            "name",
-            "component_type",
-            "vendor",
+        model = Vendor
+        fields = '__all__'
 
-            "thermal_charakter_avalible",
-            #"thermal_charakter",
-            "electronic_charakter_avalible",
-            #"electronic_charakter",
-            "mechanic_charakter_avalible",
-            #"mechanic_charakter",
-            "cable_charakter_avalible",
-            #"cable_charakter",
-
-            "date_creation",
-            "date_update",
-            "user_creator",
-            "user_updater",
-            "information",
-        ]
-
-        widgets = {
-            'date_creation': forms.DateTimeInput(
-                                    attrs={'class':'datetime-input'}),
-            'date_update': forms.DateTimeInput(
-                                    attrs={'class':'datetime-input'}),
-        }
-
-class Form_Component_thermal_charackter(forms.ModelForm):
-    max_temperature = forms.DecimalField(required=False)
-    required_air_flow = forms.DecimalField(required=False)
-
+class Form_Component_Type(forms.ModelForm):
     class Meta:
-        model = Component_thermal_charackter
-        fields = [
-            "max_temperature",
-            "required_air_flow",
-        ]
+        model = Component_Type
+        fields = '__all__'
 
-class Form_Component_electronik_charackter(forms.ModelForm):
-    speed = forms.DecimalField(required=False)
-    power = forms.DecimalField(required=False)
+
+# general Forms from the components models
+class Form_Chassis(forms.ModelForm):
     class Meta:
-        model = Component_electronik_charackter
-        fields = [
-            "speed",
-            "power",
-        ]
+        model = Chassis
+        # fields = '__all__'
+        fields = [  'name',
+                    'component_type',
+                    'vendor',
+                    'material',
+                    'size_x',
+                    'size_y',
+                    'size_z',
+                    'model',]
 
-class Form_Component_mechanik_charackter(forms.ModelForm):
-    material = forms.CharField(required=False)
-    weight = forms.DecimalField(required=False)
-    size_hight = forms.DecimalField(required=False)
-    size_length = forms.DecimalField(required=False)
-    size_width = forms.DecimalField(required=False)
+        # exclude = []
 
+class Form_ChassisAddOn(forms.ModelForm):
     class Meta:
-        model = Component_mechanik_charackter
-        fields = [
-            "material",
-            "weight",
-            "size_hight",
-            "size_length",
-            "size_width",
-        ]
+        model = ChassisAddOn
+        fields = '__all__'
 
-class Form_Component_cable_charackter(forms.ModelForm):
-
-
-    size_length = forms.DecimalField(required=False)
-    cable_type = forms.ModelChoiceField(
-                                    queryset=Component_cable_type.objects.all(),
-                                    empty_label="(Nothing)",
-                                    required=False)
+class Form_Motherboard(forms.ModelForm):
     class Meta:
-        model = Component_cable_charackter
-        fields = [
-            "size_length",
-            "cable_type",
-        ]
+        model = Motherboard
+        fields = '__all__'
+
+class Form_Cpu(forms.ModelForm):
+    class Meta:
+        model = Cpu
+        fields = '__all__'
+
+class Form_Memory(forms.ModelForm):
+    class Meta:
+        model = Memory
+        fields = '__all__'
+
+class Form_PSU(forms.ModelForm):
+    class Meta:
+        model = PSU
+        fields = '__all__'
+
+class Form_HDD(forms.ModelForm):
+    class Meta:
+        model = HDD
+        fields = '__all__'
+
+class Form_HeatSink(forms.ModelForm):
+    class Meta:
+        model = HeatSink
+        fields = '__all__'
+
+class Form_Fan(forms.ModelForm):
+    class Meta:
+        model = Fan
+        fields = '__all__'
+
+class Form_Cable(forms.ModelForm):
+    class Meta:
+        model = Cable
+        fields = '__all__'
+
+class Form_Pcba(forms.ModelForm):
+    class Meta:
+        model = Pcba
+        fields = '__all__'
+
+class Form_Pcie_Ctrl(forms.ModelForm):
+    class Meta:
+        model = Pcie_Ctrl
+        fields = '__all__'
