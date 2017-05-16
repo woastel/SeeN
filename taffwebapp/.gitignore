@@ -1,6 +1,13 @@
 
 
-accounts/__pycache__/*.pyc
+accounts/__pycache__/
 climaticmeasurement/__pycache__/
+components/__pycache__/
+eut/__pycache__/
+overview/__pycache__/
+schedule/__pycache__/
+system/__pycache__/
+taffwebapp/__pycache__/
+todos/__pycache__/
 
 db.sqlite3
