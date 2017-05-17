@@ -51,9 +51,18 @@
         <h3 class="panel-title" > Informations about Components </h3>
       </div>
       <div class="panel-body">
-        <p> Components Count: </p>
-        <p> Last Added Component: </p>
-        <p> Components with Open Verifications: </p>
+        <p><b> Components count: </b> {{component_anzahl}} </p>
+        <p><b> Last added component: </b>
+          <a href="{% url 'components:component_detail' component_last_added.component_id %}">
+            {{component_last_added.name}} - {{component_last_added.component_type_text}}
+          </a>
+        </p>
+        <p><b> Last updated component: </b>
+          <a href="{% url 'components:component_detail' component_last_updated.component_id %}">
+            {{component_last_updated.name}} - {{component_last_updated.component_type_text}}
+          </a>
+        </p>
+        <p><b> Components with Open Verifications: </b> -- noch offen --  </p>
 
 
 

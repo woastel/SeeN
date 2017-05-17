@@ -35,6 +35,20 @@ class MainView(View):
         context = {}
         usernameRequest = self.request.user.username
 
+        # Anzahl der Componenten holen
+        component_anzahl = len(Component.objects.all())
+        context["component_anzahl"] = component_anzahl
+
+        # get the last updated component object
+        component_last_updated = Component.objects.all().order_by('-date_update')[0]
+        context["component_last_updated"] = component_last_updated
+
+        # get the last component object - ( is the object with the max id)
+        component_last_added = Component.objects.all().order_by("-component_id")[0]
+        context["component_last_added"] = component_last_added
+
+
+
         return render(request, self.templateName, context)
 
 @method_decorator(login_required, name='dispatch')
