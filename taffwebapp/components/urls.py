@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^comp/(?P<pk>[0-9]+)/$',       views.Detail_Component_View.as_view(), name='component_detail'),
 
     # Create types (only used by admin )
-    url(r'^comp/componentType/add/$',   views.Create_Component_Type_View.as_view() ,       name='create_componentType'),
+    #url(r'^comp/componentType/add/$',   views.Create_Component_Type_View.as_view() ,       name='create_componentType'),
     url(r'^comp/Vendor/add/$',          views.Create_Vendor_View.as_view() ,  name='create_vendor'),
 
     # Create urls

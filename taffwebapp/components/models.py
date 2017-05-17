@@ -9,12 +9,6 @@ class Vendor(models.Model):
     def __str__(self):
         return(str(self.name))
 
-class Component_Type(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return(str(self.name))
-
 
 # Component Table
 class Component(models.Model):
@@ -25,7 +19,6 @@ class Component(models.Model):
 
     # form fields
     name = models.CharField(max_length=100)
-    component_type = models.ForeignKey(Component_Type)
 
     # Component Type Text - will set by the save function in the individual components
     component_type_text = models.CharField(max_length=100, default="Component")

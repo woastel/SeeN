@@ -97,47 +97,47 @@ class Detail_Component_View(View):
 #
 # Create Types + Vendor
 #-------------------------
-@method_decorator(login_required, name='dispatch')
-class Create_Component_Type_View(View):
-    form_class = forms.Form_Component_Type
-    templateName = 'components/component_create.html'
-    panel_titel = "Create a new Component Type"
-
-    def get(self, request, *args, **kwargs):
-        # context that schould be render
-        context = {}
-        # inital date for the form
-        initial = {}
-        # generate the form with the initals
-        form = self.form_class(initial=initial)
-        # add the form to the context
-        context.update({'form': form})
-        # add the panel titel to the context
-        context.update({'panel_titel': self.panel_titel})
-        # now return the render object with template name and context
-        return render(request, self.templateName, context)
-
-    def post(self, request, *args, **kwargs):
-        # first save the form with the request Post arguments
-        form = self.form_class(request.POST)
-        print(request.POST)
-
-        # check if form is valid
-        if form.is_valid():
-            # then get the instance from the form without commit
-            instance = form.save(commit=False)
-            # change some attributes from the instance
-            ## -- this instance have no creator instance.created_user = request.user
-            # save the instance
-            instance.save()
-            # return a http redirect
-            return HttpResponseRedirect(reverse('components:index'))
-
-        # if form is not valid - return the form object like the
-        #  get method
-        context = {'form': form}
-        context.update(self.panel_titel)
-        return render(request, self.template_name, context)
+#@method_decorator(login_required, name='dispatch')
+#class Create_Component_Type_View(View):
+#    form_class = forms.Form_Component_Type
+#    templateName = 'components/component_create.html'
+#    panel_titel = "Create a new Component Type"
+#
+#    def get(self, request, *args, **kwargs):
+#        # context that schould be render
+#        context = {}
+#        # inital date for the form
+#        initial = {}
+#        # generate the form with the initals
+#        form = self.form_class(initial=initial)
+#        # add the form to the context
+#        context.update({'form': form})
+#        # add the panel titel to the context
+#        context.update({'panel_titel': self.panel_titel})
+#        # now return the render object with template name and context
+#        return render(request, self.templateName, context)
+#
+#    def post(self, request, *args, **kwargs):
+#        # first save the form with the request Post arguments
+#        form = self.form_class(request.POST)
+#        print(request.POST)
+#
+#        # check if form is valid
+#        if form.is_valid():
+#            # then get the instance from the form without commit
+#            instance = form.save(commit=False)
+#            # change some attributes from the instance
+#            ## -- this instance have no creator instance.created_user = request.user
+#            # save the instance
+#            instance.save()
+#            # return a http redirect
+#            return HttpResponseRedirect(reverse('components:index'))
+#
+#        # if form is not valid - return the form object like the
+#        #  get method
+#        context = {'form': form}
+#        context.update(self.panel_titel)
+#        return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
 class Create_Vendor_View(View):

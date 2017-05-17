@@ -1,7 +1,7 @@
 from django import forms
 from .models import (
     Vendor,
-    Component_Type,
+    #Component_Type,
     Component,
 
     Component_Character_Thermal,
@@ -29,10 +29,10 @@ class Form_Vendor(forms.ModelForm):
         model = Vendor
         fields = '__all__'
 
-class Form_Component_Type(forms.ModelForm):
-    class Meta:
-        model = Component_Type
-        fields = '__all__'
+#class Form_Component_Type(forms.ModelForm):
+#    class Meta:
+#        model = Component_Type
+#        fields = '__all__'
 
 
 # general Forms from the components models
