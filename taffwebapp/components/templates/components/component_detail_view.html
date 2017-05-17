@@ -62,7 +62,7 @@
           {% endif %}
 
           {% if component.character_electrical_avalible == True %}
-            <h3>Thermal Character:</h3>
+            <h3>Power Character:</h3>
             <p>Power (max) (W): {{component.power_max }}</p>
             <p>Power (typ) (W): {{component.power_typical }}</p>
             <p>Power (min) (W): {{component.power_minimal }}</p>
@@ -70,8 +70,8 @@
 
           {% if component.character_thermal_avalible == True %}
             <h3>Thermal Character:</h3>
-            <p>Temperature (max) °C: {{component.model }}</p>
-            <p>Airflow (min) m3/h: {{component.model }}</p>
+            <p>Temperature (max) °C: {{component.temperature_max }}</p>
+            <p>Airflow (min) m3/h: {{component.airflow_min }}</p>
           {% endif %}
 
           {% if component.component_type_text == "Chassis" %}
@@ -156,74 +156,192 @@
           <hr>
         </div>
 
-        <div class="col-lg-12">
-          <div class="col-lg-offset-1 col-lg-1">
-            <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_chassis' component.component_id %}';">
-              Update
-            </button>
+        {% if component.component_type_text == "Chassis" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_chassis' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_chassis' component.component_id %}';">
+                Delete
+              </button>
+            </div>
           </div>
-          <div class="col-lg-offset-8 col-lg-2">
-            <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_chassis' component.component_id %}';">
-              Delete
-            </button>
+        {% endif %}
+
+        {% if component.component_type_text == "Chassis Add On" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_chassisAddOn' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_chassisAddOn' component.component_id %}';">
+                Delete
+              </button>
+            </div>
           </div>
-        </div>
+        {% endif %}
+
+        {% if component.component_type_text == "Motherboard" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_motherboard' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_motherboard' component.component_id %}';">
+                Delete
+              </button>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if component.component_type_text == "CPU" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_cpu' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_cpu' component.component_id %}';">
+                Delete
+              </button>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if component.component_type_text == "Memory" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_memory' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_memory' component.component_id %}';">
+                Delete
+              </button>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if component.component_type_text == "PSU" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_psu' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_psu' component.component_id %}';">
+                Delete
+              </button>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if component.component_type_text == "HDD" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_hdd' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_hdd' component.component_id %}';">
+                Delete
+              </button>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if component.component_type_text == "Heat Sink" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_heatsink' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_heatsink' component.component_id %}';">
+                Delete
+              </button>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if component.component_type_text == "Fan" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_fan' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_fan' component.component_id %}';">
+                Delete
+              </button>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if component.component_type_text == "Cable" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_cable' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_cable' component.component_id %}';">
+                Delete
+              </button>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if component.component_type_text == "PCBA" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_pcba' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_pcba' component.component_id %}';">
+                Delete
+              </button>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if component.component_type_text == "PCIe Controller" %}
+          <div class="col-lg-12">
+            <div class="col-lg-offset-1 col-lg-1">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:update_pciectrl' component.component_id %}';">
+                Update
+              </button>
+            </div>
+            <div class="col-lg-offset-8 col-lg-2">
+              <button type="button" class="btn btn-default" onclick="location.href = '{% url 'components:delete_pciectrl' component.component_id %}';">
+                Delete
+              </button>
+            </div>
+          </div>
+        {% endif %}
 
       </div>
     </div>
   </div>
 </div>
 
-{% if component.thermal_charakter_avalible == True %}
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Thermal Data</h3>
-        </div>
-        <div class="panel-body">
-          <p>Maximimum Thermperature: {{ component.temperature_max }} </p>
-          <p>Required Airflow: {{ component.airflow_min }} </p>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endif %}
 
-{% if component.electronic_charakter_avalible == True %}
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Electronic Data</h3>
-        </div>
-        <div class="panel-body">
-          <p>power (max): {{ component.power_max }} </p>
-          <p>power (typ): {{ component.power_typical }} </p>
-          <p>power (min): {{ component.power_minimal }} </p>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endif %}
-
-{% if component.mechanic_charakter_avalible == True %}
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Mechanic Data</h3>
-        </div>
-        <div class="panel-body">
-          <p>material: {{ component.material }} </p>
-          <p>size_x: {{ component.size_x }} </p>
-          <p>size_y: {{ component.size_y }} </p>
-          <p>size_z: {{ component.size_z }} </p>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endif %}
 
 
 

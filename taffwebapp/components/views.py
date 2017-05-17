@@ -187,9 +187,7 @@ class Create_Vendor_View(View):
         return render(request, self.template_name, context)
 
 
-#
-# Create Components
-#-------------------------
+# Chassis Views
 @method_decorator(login_required, name='dispatch')
 class Create_Chassis_View(View):
     form_class = forms.Form_Chassis
@@ -235,6 +233,7 @@ class Create_Chassis_View(View):
         context.update(self.panel_titel)
         return render(request, self.template_name, context)
 
+@method_decorator(login_required, name='dispatch')
 class Update_Chassis_View(generic.UpdateView):
     form_class = forms.Form_Chassis
     model = Chassis
@@ -272,18 +271,15 @@ class Update_Chassis_View(generic.UpdateView):
 
         return context
 
-
+@method_decorator(login_required, name='dispatch')
 class Delete_Chassis_View(generic.DeleteView):
     model = Chassis
     template_name = "components/component_delete_confirm.html"
     success_url = reverse_lazy("components:index")
 
-    # def delete(self, request, *args, **kwargs):
-    #     # check if the request user is the creator user
-    #     # if not it is not possible to delet this object
-    #     pass
 
 
+# Chassis Add On Views
 @method_decorator(login_required, name='dispatch')
 class Create_ChassisAddOn_View(View):
     form_class = forms.Form_ChassisAddOn
@@ -329,6 +325,54 @@ class Create_ChassisAddOn_View(View):
         return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
+class Update_ChassisAddOn_View(generic.UpdateView):
+    form_class = forms.Form_ChassisAddOn
+    model = ChassisAddOn
+    template_name = "components/component_create.html"
+
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_ChassisAddOn_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_ChassisAddOn_View, self).get_context_data(**kwargs)
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Delete_ChassisAddOn_View(generic.DeleteView):
+    model = ChassisAddOn
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
+
+
+
+
+
+
+
+
+# Motherboard Views
+@method_decorator(login_required, name='dispatch')
 class Create_Motherboard_View(View):
     form_class = forms.Form_Motherboard
     templateName = 'components/component_create.html'
@@ -373,7 +417,51 @@ class Create_Motherboard_View(View):
         context.update(self.panel_titel)
         return render(request, self.template_name, context)
 
+@method_decorator(login_required, name='dispatch')
+class Update_Motherboard_View(generic.UpdateView):
+    form_class = forms.Form_Motherboard
+    model = Motherboard
+    template_name = "components/component_create.html"
 
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_Motherboard_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_Motherboard_View, self).get_context_data(**kwargs)
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Delete_Motherboard_View(generic.DeleteView):
+    model = Motherboard
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
+
+
+
+
+
+# CPU Views
 @method_decorator(login_required, name='dispatch')
 class Create_CPU_View(View):
     form_class = forms.Form_Cpu
@@ -420,6 +508,51 @@ class Create_CPU_View(View):
         return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
+class Update_CPU_View(generic.UpdateView):
+    form_class = forms.Form_Cpu
+    model = Cpu
+    template_name = "components/component_create.html"
+
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_CPU_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_CPU_View, self).get_context_data(**kwargs)
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Delete_CPU_View(generic.DeleteView):
+    model = Cpu
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
+
+
+
+
+
+# Memory Views
+@method_decorator(login_required, name='dispatch')
 class Create_Memory_View(View):
     form_class = forms.Form_Memory
     templateName = 'components/component_create.html'
@@ -464,6 +597,49 @@ class Create_Memory_View(View):
         context.update(self.panel_titel)
         return render(request, self.template_name, context)
 
+@method_decorator(login_required, name='dispatch')
+class Update_Memory_View(generic.UpdateView):
+    form_class = forms.Form_Memory
+    model = Memory
+    template_name = "components/component_create.html"
+
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_Memory_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_Memory_View, self).get_context_data(**kwargs)
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Delete_Memory_View(generic.DeleteView):
+    model = Memory
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
+
+
+
+# PSU Views
 @method_decorator(login_required, name='dispatch')
 class Create_PSU_View(View):
     form_class = forms.Form_PSU
@@ -510,6 +686,50 @@ class Create_PSU_View(View):
         return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
+class Update_PSU_View(generic.UpdateView):
+    form_class = forms.Form_PSU
+    model = PSU
+    template_name = "components/component_create.html"
+
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_PSU_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_PSU_View, self).get_context_data(**kwargs)
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Delete_PSU_View(generic.DeleteView):
+    model = PSU
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
+
+
+
+
+# HDD Views
+@method_decorator(login_required, name='dispatch')
 class Create_HDD_View(View):
     form_class = forms.Form_HDD
     templateName = 'components/component_create.html'
@@ -554,6 +774,50 @@ class Create_HDD_View(View):
         context.update(self.panel_titel)
         return render(request, self.template_name, context)
 
+@method_decorator(login_required, name='dispatch')
+class Update_HDD_View(generic.UpdateView):
+    form_class = forms.Form_HDD
+    model = HDD
+    template_name = "components/component_create.html"
+
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_HDD_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_HDD_View, self).get_context_data(**kwargs)
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Delete_HDD_View(generic.DeleteView):
+    model = HDD
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
+
+
+
+
+# Heat Sink Views
 @method_decorator(login_required, name='dispatch')
 class Create_HeatSink_View(View):
     form_class = forms.Form_HeatSink
@@ -600,6 +864,49 @@ class Create_HeatSink_View(View):
         return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
+class Update_HeatSink_View(generic.UpdateView):
+    form_class = forms.Form_HeatSink
+    model = HeatSink
+    template_name = "components/component_create.html"
+
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_HeatSink_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_HeatSink_View, self).get_context_data(**kwargs)
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Delete_HeatSink_View(generic.DeleteView):
+    model = HeatSink
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
+
+
+
+# Fan Views
+@method_decorator(login_required, name='dispatch')
 class Create_Fan_View(View):
     form_class = forms.Form_Fan
     templateName = 'components/component_create.html'
@@ -644,6 +951,48 @@ class Create_Fan_View(View):
         context.update(self.panel_titel)
         return render(request, self.template_name, context)
 
+@method_decorator(login_required, name='dispatch')
+class Update_Fan_View(generic.UpdateView):
+    form_class = forms.Form_Fan
+    model = Fan
+    template_name = "components/component_create.html"
+
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_Fan_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_Fan_View, self).get_context_data(**kwargs)
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Delete_Fan_View(generic.DeleteView):
+    model = Fan
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
+
+
+# Cable Views
 @method_decorator(login_required, name='dispatch')
 class Create_Cable_View(View):
     form_class = forms.Form_Cable
@@ -690,6 +1039,49 @@ class Create_Cable_View(View):
         return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
+class Update_Cable_View(generic.UpdateView):
+    form_class = forms.Form_Cable
+    model = Cable
+    template_name = "components/component_create.html"
+
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_Cable_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_Cable_View, self).get_context_data(**kwargs)
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Delete_Cable_View(generic.DeleteView):
+    model = Cable
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
+
+
+
+# PCBA Views
+@method_decorator(login_required, name='dispatch')
 class Create_Pcba_View(View):
     form_class = forms.Form_Pcba
     templateName = 'components/component_create.html'
@@ -735,6 +1127,48 @@ class Create_Pcba_View(View):
         return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
+class Update_Pcba_View(generic.UpdateView):
+    form_class = forms.Form_Pcba
+    model = Pcba
+    template_name = "components/component_create.html"
+
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_Pcba_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_Pcba_View, self).get_context_data(**kwargs)
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Delete_Pcba_View(generic.DeleteView):
+    model = Pcba
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
+
+
+# PCIe Ctrl Views
+@method_decorator(login_required, name='dispatch')
 class Create_PcieCtrl_View(View):
     form_class = forms.Form_Pcie_Ctrl
     templateName = 'components/component_create.html'
@@ -778,3 +1212,43 @@ class Create_PcieCtrl_View(View):
         context = {'form': form}
         context.update(self.panel_titel)
         return render(request, self.template_name, context)
+
+@method_decorator(login_required, name='dispatch')
+class Update_PcieCtrl_View(generic.UpdateView):
+    form_class = forms.Form_Pcie_Ctrl
+    model = Pcie_Ctrl
+    template_name = "components/component_create.html"
+
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_PcieCtrl_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_PcieCtrl_View, self).get_context_data(**kwargs)
+
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class Delete_PcieCtrl_View(generic.DeleteView):
+    model = Pcie_Ctrl
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
