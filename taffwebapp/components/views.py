@@ -45,6 +45,15 @@ class List_Component_View(View):
         context = {}
 
         context["component_list"] = Component.objects.all()
+        nearby_places = Component.objects.filter(character_thermal_avalible=True).select_subclasses()
+
+        print("\n\n----------------------")
+
+        for i in nearby_places:
+            print(str(i) + " Temp: " + str(i.temperature_max))
+
+        print("----------------------\n\n")
+
         print(context["component_list"])
         # add the panel titel to the context
         context.update({'panel_titel': self.panel_titel})
@@ -57,47 +66,28 @@ class Detail_Component_View(View):
     panel_titel = "Component Detail View"
 
     def get(self, request, *args, **kwargs):
-        # context that schould be render
+        # context dictonary - render context
         context = {}
+        context['alert_success_avalible'] = False
+        context['alert_danger_avalible'] = False
+        # component id
         var_component_id = kwargs["pk"]
-        var_component = Component.objects.filter(component_id=var_component_id)
-        context['component'] = var_component
-        print(context['component'])
-        a = Component(var_component)
+        # get the component - but select the subclasses
+        var_component = Component.objects.filter(component_id=var_component_id).select_subclasses()
+
+        # put the component into the dictonary
+        # check if the querysert has a object
+        if len(var_component) != 0:
+            context['component'] = var_component[0]
+            context['alert_success_avalible'] = True
+            context['alert_success'] = str(
+                'Pass - Component with id({}) is avalible.'.format(var_component_id))
+        else:
+            context['alert_danger_avalible'] = True
+            context['alert_danger'] = str(
+                'Error - Component with id({}) isnt avalible.'.format(var_component_id))
 
 
-
-
-        try:
-            chassis = a.chassis
-        except AttributeError as error_text:
-            print("DEBUG: object isnt a chassis")
-            print(error_text)
-
-        try:
-            chassisAddOn = a.chassisaddon
-        except AttributeError as error_text:
-            print("DEBUG: object isnt a Chassis Add ON")
-            print(error_text)
-
-        try:
-            chassisAddOn = a.motherboard
-        except AttributeError as error_text:
-            print("DEBUG: object isnt a Chassis Add ON")
-            print(error_text)
-
-
-
-
-
-
-
-
-
-
-
-
-        print(kwargs)
         # add the panel titel to the context
         context.update({'panel_titel': self.panel_titel})
         # now return the render object with template name and context
@@ -304,6 +294,32 @@ class Create_Motherboard_View(View):
         # now return the render object with template name and context
         return render(request, self.templateName, context)
 
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
+
+
 @method_decorator(login_required, name='dispatch')
 class Create_CPU_View(View):
     form_class = forms.Form_Cpu
@@ -323,6 +339,31 @@ class Create_CPU_View(View):
         context.update({'panel_titel': self.panel_titel})
         # now return the render object with template name and context
         return render(request, self.templateName, context)
+
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
 class Create_Memory_View(View):
@@ -344,6 +385,31 @@ class Create_Memory_View(View):
         # now return the render object with template name and context
         return render(request, self.templateName, context)
 
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
+
 @method_decorator(login_required, name='dispatch')
 class Create_PSU_View(View):
     form_class = forms.Form_PSU
@@ -363,6 +429,31 @@ class Create_PSU_View(View):
         context.update({'panel_titel': self.panel_titel})
         # now return the render object with template name and context
         return render(request, self.templateName, context)
+
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
 class Create_HDD_View(View):
@@ -384,6 +475,31 @@ class Create_HDD_View(View):
         # now return the render object with template name and context
         return render(request, self.templateName, context)
 
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
+
 @method_decorator(login_required, name='dispatch')
 class Create_HeatSink_View(View):
     form_class = forms.Form_HeatSink
@@ -403,6 +519,31 @@ class Create_HeatSink_View(View):
         context.update({'panel_titel': self.panel_titel})
         # now return the render object with template name and context
         return render(request, self.templateName, context)
+
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
 class Create_Fan_View(View):
@@ -424,6 +565,31 @@ class Create_Fan_View(View):
         # now return the render object with template name and context
         return render(request, self.templateName, context)
 
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
+
 @method_decorator(login_required, name='dispatch')
 class Create_Cable_View(View):
     form_class = forms.Form_Cable
@@ -443,6 +609,31 @@ class Create_Cable_View(View):
         context.update({'panel_titel': self.panel_titel})
         # now return the render object with template name and context
         return render(request, self.templateName, context)
+
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
 
 @method_decorator(login_required, name='dispatch')
 class Create_Pcba_View(View):
@@ -464,6 +655,31 @@ class Create_Pcba_View(View):
         # now return the render object with template name and context
         return render(request, self.templateName, context)
 
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)
+
 @method_decorator(login_required, name='dispatch')
 class Create_PcieCtrl_View(View):
     form_class = forms.Form_Pcie_Ctrl
@@ -483,3 +699,28 @@ class Create_PcieCtrl_View(View):
         context.update({'panel_titel': self.panel_titel})
         # now return the render object with template name and context
         return render(request, self.templateName, context)
+
+    def post(self, request, *args, **kwargs):
+        # first save the form with the request Post arguments
+        form = self.form_class(request.POST)
+        print(request.POST)
+
+        # check if form is valid
+        if form.is_valid():
+            # then get the instance from the form without commit
+            instance = form.save(commit=False)
+            # change some attributes from the instance
+            instance.date_creation = datetime.now()
+            instance.date_update = datetime.now()
+            instance.user_creator = request.user
+            instance.user_updater = request.user
+            # save the instance
+            instance.save()
+            # return a http redirect
+            return HttpResponseRedirect(reverse('components:index'))
+
+        # if form is not valid - return the form object like the
+        #  get method
+        context = {'form': form}
+        context.update(self.panel_titel)
+        return render(request, self.template_name, context)

@@ -17,9 +17,10 @@
     <table id="ddddd" class="table table-bordered">
       <thead>
         <tr class="warning">
-          <td>component_id </td>
+          <td>id</td>
           <td>name</a></td>
           <td>component_type.name</td>
+          <td>component_type_text</td>
           <td>vendor.name</td>
           <th>date_creation</th>
           <th>date_update</th>
@@ -31,10 +32,11 @@
       <tbody>
         {% for item in component_list %}
             <tr>
-
               <td>{{ item.component_id }}</td>
-              <td>{{ item.name }}</td>
+              <td><a href="{% url 'components:component_detail' item.component_id %}">
+                  {{ item.name }}</a></td>
               <td>{{ item.component_type.name }}</td>
+              <td>{{ item.component_type_text }}</td>
               <td>{{ item.vendor.name }}</td>
               <th>{{ item.date_creation }}</th>
               <th>{{ item.date_update }}</th>
