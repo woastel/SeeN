@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from model_utils.managers import InheritanceManager
+from datetime import datetime
 
 # Create your models here.
 class Vendor(models.Model):
@@ -78,6 +79,9 @@ class Chassis       (Component, Component_Character_Mechanical):
 
     def save(self, *args, **kwargs):
         # Set the Character Bools
+
+        print(self.user_updater)
+
         self.character_mechanical_avalible = True
         self.character_electrical_avalible = False
         self.character_thermal_avalible = False

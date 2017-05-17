@@ -3,8 +3,10 @@ from django.views import generic, View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse
 from . import forms
+from django.core.urlresolvers import reverse_lazy
 from datetime import datetime
 from .models import (
         Component,
@@ -67,6 +69,7 @@ class Detail_Component_View(View):
 
     def get(self, request, *args, **kwargs):
         # context dictonary - render context
+        print(kwargs)
         context = {}
         context['alert_success_avalible'] = False
         context['alert_danger_avalible'] = False
@@ -92,6 +95,8 @@ class Detail_Component_View(View):
         context.update({'panel_titel': self.panel_titel})
         # now return the render object with template name and context
         return render(request, self.templateName, context)
+
+
 
 
 #
@@ -229,6 +234,55 @@ class Create_Chassis_View(View):
         context = {'form': form}
         context.update(self.panel_titel)
         return render(request, self.template_name, context)
+
+class Update_Chassis_View(generic.UpdateView):
+    form_class = forms.Form_Chassis
+    model = Chassis
+    template_name = "components/component_create.html"
+    #success_url = reverse_lazy('components:index'  kwargs={'pk': })
+
+    def get_object(self):
+        # it doesn't matter how many times get_object is called per request
+        # it should not do more than one request
+        if not hasattr(self, '_object'):
+            self._object = super(Update_Chassis_View, self).get_object()
+
+        # now update the user and date
+        self._object.user_updater = self.request.user
+        self._object.date_update = datetime.now()
+
+        return self._object
+
+    #def get_success_url(self):
+    #    return reverse('components:component_detail', kwargs={'pk': self.object.component_id})
+
+    def form_valid(self, form):
+        form.save()
+        context = {}
+        context['component'] = self.object
+        context['alert_success_avalible'] = True
+        context['alert_success'] = str(
+            'Component Update is PASS'.format(self.object.component_id))
+
+        return render(self.request, 'components/component_detail_view.html', context)
+
+    def get_context_data(self, **kwargs):
+        # erstmal selber aufrufen um die context daten zu bekommen
+        context = super(Update_Chassis_View, self).get_context_data(**kwargs)
+
+        return context
+
+
+class Delete_Chassis_View(generic.DeleteView):
+    model = Chassis
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("components:index")
+
+    # def delete(self, request, *args, **kwargs):
+    #     # check if the request user is the creator user
+    #     # if not it is not possible to delet this object
+    #     pass
+
 
 @method_decorator(login_required, name='dispatch')
 class Create_ChassisAddOn_View(View):
