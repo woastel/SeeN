@@ -38,43 +38,16 @@
 
 </style>
 
-<script type="text/javascript">
 
-function start() {
-    time();
-    window.setInterval("time()", 1000);
-}
-
-function time() {
-    var now = new Date();
-    hours = now.getHours();
-    minutes = now.getMinutes();
-    seconds = now.getSeconds();
-
-    thetime = (hours < 10) ? "0" + hours + ":" : hours + ":";
-    thetime += (minutes < 10) ? "0" + minutes + ":" : minutes + ":";
-    thetime += (seconds < 10) ? "0" + seconds : seconds;
-
-    element = document.getElementById("time");
-    element.innerHTML = thetime;
-}
-
-
-</script>
 
 
 
 <div class="container">
 
   <div class="row">
-    <div class="col-lg-10">
+    <div class="col-lg-12">
       <div class="page-header">
         <h1>Example page header <small></small></h1>
-      </div>
-    </div>
-    <div class="col-lg-2">
-      <div class="page-header">
-        <h1><span  id="time"></span></h1>
       </div>
     </div>
   </div>
