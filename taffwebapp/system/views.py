@@ -3,6 +3,8 @@ from django.views import generic
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy
 from django.views import generic, View
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import (
@@ -44,6 +46,49 @@ class Main_View(View):
 
         return render(request, self.template_name, context)
 
+@method_decorator(login_required, name='dispatch')
+class List_All_Systems(View):
+    tempalteName = 'system/system_list_view.html'
+    panel_titel = 'System List View'
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+
+        systemlist = System.objects.all()
+        context['system_list'] = systemlist
+
+        context['panel_titel'] = self.panel_titel
+
+        return render(request, self.tempalteName, context)
+
+class Detail_System_View(View):
+    templateName = 'system/system_detail_view.html'
+    panel_titel = 'System Detail View'
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+
+        # system id aus den kwargs holen
+        var_system_id = kwargs["pk"]
+
+        var_system_obj_list = System.objects.filter(id=var_system_id)
+
+        if len(var_system_obj_list) != 0:
+            context['system'] = var_system_obj_list[0]
+
+        else:
+            print("Error: the system is not avalible")
+
+        context['panel_titel'] = self.panel_titel
+
+
+
+
+        return render(request, self.templateName, context)
+
+
+
+
 
 @method_decorator(login_required, name='dispatch')
 class Create_System_View(View):
@@ -74,6 +119,19 @@ class Create_System_View(View):
         context = {'form': form}
         context.update(self.panel_titel)
         return render(request, self.template_name, context)
+
+class Update_System_View(UpdateView):
+    form_class = Create_System_Form
+    model = System
+    template_name = 'system/system_createForm.html'
+    success_url = reverse_lazy('system:system_index')
+
+class Delete_System_View(DeleteView):
+    model = System
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy('system:system_index')
+
+
 
 
 @method_decorator(login_required, name='dispatch')

@@ -17,14 +17,12 @@ class Create_System_Form(forms.ModelForm):
             "owner_co",
         ]
 
-
 class Create_SystemModel_Form(forms.ModelForm):
     class Meta:
         model = SystemModel
         fields = [
             "name"
         ]
-
 
 class Create_Milestone_Form(forms.ModelForm):
     class Meta:
