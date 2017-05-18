@@ -71,19 +71,27 @@ class Detail_System_View(View):
         # system id aus den kwargs holen
         var_system_id = kwargs["pk"]
 
+        # geht the systemobject by the id
         var_system_obj_list = System.objects.filter(id=var_system_id)
 
+        # wenn die liste leer ist dann gibt es das gesuchte object nicht
+        #   jetzt kann eine warnung ausgegeben werden
         if len(var_system_obj_list) != 0:
-            context['system'] = var_system_obj_list[0]
-
+            # catch the systemobject
+            var_system = var_system_obj_list[0]
+            # add the system to context
+            context['system'] = var_system
+            # get the hole list of msdb connections from the system
+            msdbconnection_list = MSDBConnention.objects.filter(system=var_system)
+            context['msdbconnection_list'] = msdbconnection_list
         else:
+            # warning output
             print("Error: the system is not avalible")
 
+        # add the panel titel
         context['panel_titel'] = self.panel_titel
 
-
-
-
+        # and render the page
         return render(request, self.templateName, context)
 
 

@@ -20,7 +20,7 @@ class SystemModel(models.Model):
 
 class System(models.Model):
     name = models.CharField(max_length=100)
-    info = models.CharField(max_length=500)
+    info = models.TextField(max_length=5000)
     model = models.ForeignKey(SystemModel, on_delete=models.PROTECT)
     owner = models.ForeignKey(User)
     owner_co = models.ForeignKey(User, related_name="cocococococco")
@@ -51,6 +51,11 @@ class MSDBConnention(models.Model):
         return (str(self.id) + " - " + str(self.system.name) + " - " + str(self.milestone.name))
 
 
+
+
+
+
+# Noch nicht eingebaut
 class Component_released_in_system(models.Model):
     user_creator = models.ForeignKey(User)
     date_creation = models.DateTimeField()
