@@ -25,8 +25,8 @@ urlpatterns = [
     url(r'^create/milestone/$',         views.Create_Milestone_View.as_view(),      name="create_milestone"),
 
 
-    url(r'^create/MSDBConnection/$',                           views.Create_MSDBConnection_View.as_view(), name="create_msdb_connection"),
-    url(r'^create/MSDBConnection/system/(?P<pk>[0-9]+)/$',     views.Create_MSDB_Connection_from_system.as_view(),         name="create_ms_connection_from_system"),
-
+    url(r'^create/MSDBConnection/$',                            views.Create_MSDBConnection_View.as_view(), name="create_msdb_connection"),
+    url(r'^create/MSDBConnection/system/(?P<pk>[0-9]+)/$',      views.Create_MSDB_Connection_from_system.as_view(),         name="create_ms_connection_from_system"),
+    url(r'^delete/MSDBConnection/(?P<pk>[0-9]+)/$',             views.Delete_MSDB_Connection.as_view(),         name="delete_msdb_connection"),
 
     ]

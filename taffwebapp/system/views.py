@@ -62,6 +62,7 @@ class List_All_Systems(View):
 
         return render(request, self.tempalteName, context)
 
+@method_decorator(login_required, name='dispatch')
 class Detail_System_View(View):
     templateName = 'system/system_detail_view.html'
     panel_titel = 'System Detail View'
@@ -83,7 +84,7 @@ class Detail_System_View(View):
             # add the system to context
             context['system'] = var_system
             # get the hole list of msdb connections from the system
-            msdbconnection_list = MSDBConnention.objects.filter(system=var_system)
+            msdbconnection_list = MSDBConnention.objects.filter(system=var_system).order_by('milestone__name')
             context['msdbconnection_list'] = msdbconnection_list
         else:
             # warning output
@@ -213,6 +214,12 @@ class Create_Milestone_View(View):
         return render(request, self.template_name, context)
 
 
+
+
+# Create MSDB Connections
+#   1. Free View ( you can select a system and a milestone )
+#   2. From Systemside ( you can only select a milstone )
+
 @method_decorator(login_required, name='dispatch')
 class Create_MSDBConnection_View(View):
     form_class = Create_MSDBConnention_Form
@@ -297,8 +304,6 @@ class Create_MSDBConnection_View(View):
         context.update({"error_msg_list": error_msg})
         return render(request, self.template_name, context)
 
-
-
 @method_decorator(login_required, name='dispatch')
 class Create_MSDB_Connection_from_system(View):
     form_class = Create_MSDBConnention_Form2
@@ -356,7 +361,7 @@ class Create_MSDB_Connection_from_system(View):
                 instance.system = system_var
 
                 instance.save()
-                return HttpResponseRedirect(reverse('system:system_index'))
+                return HttpResponseRedirect(reverse_lazy('system:system_detail', kwargs={"pk": system_id}))
 
 
         context = {'form': form}
@@ -364,3 +369,36 @@ class Create_MSDB_Connection_from_system(View):
         context.update({"error_msg_avalible": True})
         context.update({"error_msg_list": error_msg})
         return render(request, self.template_name, context)
+
+@method_decorator(login_required, name='dispatch')
+class Delete_MSDB_Connection(DeleteView):
+    model = MSDBConnention
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy('system:system_index')
+
+
+    def delete(self, request, *args, **kwargs):
+        """
+            Funktion to check the user
+            only the creator can delete the object nobody else
+        """
+
+        # get the object you would be delete
+        self.object = self.get_object()
+        # check if the creator.username is the requested username
+        ## if self.object.creator.username != request.user.get_username():
+        ##     # if not send a error
+        ##     return HttpResponse("FAIL not the right user")
+
+        print(kwargs)
+
+        system = self.object.system
+
+        self.success_url = reverse_lazy('system:system_detail', kwargs={"pk": system.id})
+
+        # store the success url
+        success_url = self.get_success_url()
+        # delete the object
+        self.object.delete()
+        # return the success url
+        return HttpResponseRedirect(success_url)

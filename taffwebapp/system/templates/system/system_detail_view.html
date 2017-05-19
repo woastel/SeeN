@@ -40,6 +40,7 @@
         <p>Informations: </p>
         <textarea name="Text1" cols="70" rows="10">{{system.info}}</textarea>
         <h3> MS Connections: </h3>
+
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
@@ -47,6 +48,7 @@
                 <td>Milestone</td>
                 <td>System</td>
                 <td>Date</td>
+                <td>Delete</td>
               </tr>
             </thead>
             <tbody>
@@ -55,10 +57,14 @@
                   <th>{{ item.milestone }}</th>
                   <th>{{ item.system.name }}</th>
                   <th>{{ item.creation_date }}</th>
+                  <th><a href="{% url 'system:delete_msdb_connection' item.id %}">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </a></th>
                 </tr>
               {% endfor %}
             </tbody>
           </table>
+
         </div>
       </div>
     </div>
