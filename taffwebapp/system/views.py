@@ -12,7 +12,8 @@ from .forms import (
     Create_Milestone_Form,
     Create_SystemModel_Form,
     Create_MSDBConnention_Form,
-    Create_MSDBConnention_Form2
+    Create_MSDBConnention_Form2,
+    Create_Component_Connection_Form
 )
 
 from django.core.urlresolvers import reverse
@@ -22,6 +23,7 @@ from .models import (
     SystemModel,
     Milestone,
     MSDBConnention,
+    System_Component_connection
 )
 
 from datetime import datetime
@@ -402,3 +404,22 @@ class Delete_MSDB_Connection(DeleteView):
         self.object.delete()
         # return the success url
         return HttpResponseRedirect(success_url)
+
+
+# Views for the System - Component Conection
+
+class Create_Component_Connection(View):
+    form_class = Create_Component_Connection_Form
+    template_name = 'system/system_createForm.html'
+    panel_titel = {'panel_titel' : 'Create a Milestone Time System Connection'}
+
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        pass
+
+
+class Delete_Component_Connection(View):
+    model = System_Component_connection
+    template_name = "components/component_delete_confirm.html"

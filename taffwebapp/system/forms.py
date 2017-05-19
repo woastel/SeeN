@@ -3,7 +3,8 @@ from .models import (
     System,
     SystemModel,
     Milestone,
-    MSDBConnention )
+    MSDBConnention,
+    System_Component_connection )
 
 
 class Create_System_Form(forms.ModelForm):
@@ -72,3 +73,11 @@ class Create_MSDBConnention_Form2(forms.ModelForm):
             'milestoneFinish_date': forms.DateTimeInput(
                                     attrs={'class':'datetime-input'}),
         }
+
+class Create_Component_Connection_Form(forms.ModelForm):
+    class Meta:
+        model = System_Component_connection
+        fields = [
+            "component",
+            "component_count"
+        ]
