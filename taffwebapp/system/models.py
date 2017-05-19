@@ -53,12 +53,18 @@ class MSDBConnention(models.Model):
 
 
 
-
-
 # Noch nicht eingebaut
-class Component_released_in_system(models.Model):
+class System_Component_connection(models.Model):
     user_creator = models.ForeignKey(User)
     date_creation = models.DateTimeField()
 
+    component_count = models.PositiveIntegerField()
     component = models.ForeignKey(Component)
     system = models.ForeignKey(System)
+
+    def __str__(self):
+        return(
+                str(self.id) + " - " +
+                str(self.system.name) + " - " +
+                str(self.component.name)
+                )

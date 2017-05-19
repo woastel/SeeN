@@ -49,6 +49,10 @@ class Form_Chassis(forms.ModelForm):
                     'character_electrical_avalible',
                     'character_thermal_avalible']
 
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}
+
 class Form_ChassisAddOn(forms.ModelForm):
     class Meta:
         model = ChassisAddOn
@@ -60,6 +64,10 @@ class Form_ChassisAddOn(forms.ModelForm):
                     'character_mechanical_avalible',
                     'character_electrical_avalible',
                     'character_thermal_avalible']
+
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}
 
 class Form_Motherboard(forms.ModelForm):
     class Meta:
@@ -73,6 +81,10 @@ class Form_Motherboard(forms.ModelForm):
                     'character_electrical_avalible',
                     'character_thermal_avalible']
 
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}
+
 class Form_Cpu(forms.ModelForm):
     class Meta:
         model = Cpu
@@ -84,6 +96,10 @@ class Form_Cpu(forms.ModelForm):
                     'character_mechanical_avalible',
                     'character_electrical_avalible',
                     'character_thermal_avalible']
+
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}
 
 class Form_Memory(forms.ModelForm):
     class Meta:
@@ -97,6 +113,10 @@ class Form_Memory(forms.ModelForm):
                     'character_electrical_avalible',
                     'character_thermal_avalible']
 
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}
+
 class Form_PSU(forms.ModelForm):
     class Meta:
         model = PSU
@@ -108,6 +128,10 @@ class Form_PSU(forms.ModelForm):
                     'character_mechanical_avalible',
                     'character_electrical_avalible',
                     'character_thermal_avalible']
+
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}
 
 class Form_HDD(forms.ModelForm):
     class Meta:
@@ -121,6 +145,10 @@ class Form_HDD(forms.ModelForm):
                     'character_electrical_avalible',
                     'character_thermal_avalible']
 
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}
+
 class Form_HeatSink(forms.ModelForm):
     class Meta:
         model = HeatSink
@@ -132,6 +160,10 @@ class Form_HeatSink(forms.ModelForm):
                     'character_mechanical_avalible',
                     'character_electrical_avalible',
                     'character_thermal_avalible']
+
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}
 
 class Form_Fan(forms.ModelForm):
     class Meta:
@@ -145,6 +177,10 @@ class Form_Fan(forms.ModelForm):
                     'character_electrical_avalible',
                     'character_thermal_avalible']
 
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}
+
 class Form_Cable(forms.ModelForm):
     class Meta:
         model = Cable
@@ -156,6 +192,10 @@ class Form_Cable(forms.ModelForm):
                     'character_mechanical_avalible',
                     'character_electrical_avalible',
                     'character_thermal_avalible']
+
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}
 
 class Form_Pcba(forms.ModelForm):
     class Meta:
@@ -169,6 +209,11 @@ class Form_Pcba(forms.ModelForm):
                     'character_electrical_avalible',
                     'character_thermal_avalible']
 
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}
+
+
 class Form_Pcie_Ctrl(forms.ModelForm):
     class Meta:
         model = Pcie_Ctrl
@@ -180,3 +225,7 @@ class Form_Pcie_Ctrl(forms.ModelForm):
                     'character_mechanical_avalible',
                     'character_electrical_avalible',
                     'character_thermal_avalible']
+
+        widgets = {
+            'delivery_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'})}

@@ -12,6 +12,7 @@ from .forms import (
     Create_Milestone_Form,
     Create_SystemModel_Form,
     Create_MSDBConnention_Form,
+    Create_MSDBConnention_Form2
 )
 
 from django.core.urlresolvers import reverse
@@ -285,6 +286,74 @@ class Create_MSDBConnection_View(View):
                 # hier kann sollte noch ueberprueft werden ob
                 #   das datum des Milestone Finish date groeser ist als das datum
                 #    der erstellung
+
+                instance.save()
+                return HttpResponseRedirect(reverse('system:system_index'))
+
+
+        context = {'form': form}
+        context.update(self.panel_titel)
+        context.update({"error_msg_avalible": True})
+        context.update({"error_msg_list": error_msg})
+        return render(request, self.template_name, context)
+
+
+
+@method_decorator(login_required, name='dispatch')
+class Create_MSDB_Connection_from_system(View):
+    form_class = Create_MSDBConnention_Form2
+    template_name = 'system/system_createForm.html'
+    panel_titel = {'panel_titel' : 'Create a Milestone Time System Connection'}
+
+
+    def get(self, request, *args, **kwargs):
+
+
+        form = self.form_class()
+        context = {'form': form}
+        context.update(self.panel_titel)
+        print(context)
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+
+        # laden der ausgefuellten form aus dem POST request
+        form = self.form_class(request.POST)
+
+
+        # Die System id aus dem POST request laden
+        print(kwargs)
+        system_id = kwargs["pk"]
+        # die milestone id aus dem POST request laden
+        milestone_id = request.POST["milestone"]
+
+
+
+        # Alle Objecte laden die system_id und milestone_id enthalten
+        # Denn es darf für jedes system nur ein milesone mit einem type geben
+        # nicht das es 2x den MS 10 gibt
+        list_msdb_connects = MSDBConnention.objects.filter( system=system_id,
+                                                            milestone=milestone_id)
+
+        # checken ob die geladene liste objecte enthaelt
+        # oder die laenge der liste 0 ist
+        if len(list_msdb_connects) != 0:
+            error_msg = []
+            error_msg.append(str("Es besteht schon ein objekt aus system_id {} und milestone_id {}".format(system_id, milestone_id)))
+            print("DEBUG: Error: es ist schon ein Objects dieser Kombination vorhanden")
+
+        else:
+            print("DEBUG: OK: Object kann erstellt werden.")
+
+            if form.is_valid():
+
+                instance = form.save(commit=False)
+
+                instance.creator = request.user
+                instance.creation_date = datetime.now()
+                system_var = System.objects.filter(id=system_id)[0]
+                instance.system = system_var
 
                 instance.save()
                 return HttpResponseRedirect(reverse('system:system_index'))

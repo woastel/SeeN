@@ -20,6 +20,7 @@
           <td>ID</td>
           <td>Name</a></td>
           <td>Type</td>
+          <td>Delivery Date</td>
           <td>Vendor</td>
           <th>Date creation</th>
           <th>Date update</th>
@@ -33,6 +34,7 @@
             <td>{{ item.component_id }}</td>
             <td><a href="{% url 'components:component_detail' item.component_id %}">{{ item.name }}</a></td>
             <td>{{ item.component_type_text }}</td>
+            <td>{{ item.delivery_date}}</td>
             <td>{{ item.vendor.name }}</td>
             <th>{{ item.date_creation }}</th>
             <th>{{ item.date_update }}</th>

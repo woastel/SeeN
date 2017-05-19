@@ -27,7 +27,7 @@
 
 <!-- Component Detail Box -->
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-lg-9">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Component: [ {{ system.name }} ] ({{system.id}})</h3>
@@ -38,15 +38,8 @@
         <p>Owner: {{system.owner}}</p>
         <p>Ownwer Co: {{system.owner_co}}</p>
         <p>Informations: </p>
-        <textarea name="Text1" cols="100" rows="10">{{system.info}}</textarea>
-
-
-
-
+        <textarea name="Text1" cols="70" rows="10">{{system.info}}</textarea>
         <h3> MS Connections: </h3>
-
-
-
         <div class="table-responsive">
           <table class="table table-bordered">
             <thead>
@@ -67,27 +60,67 @@
             </tbody>
           </table>
         </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="col-lg-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">System Options</h3>
+      </div>
+      <div class="panel-body">
+        <div class="btn-group-vertical" style="width: 180px;" role="group" aria-label="...">
+          <h3>System Details</h3>
+          <button type="button" class="btn btn-default" onclick="location.href = '{% url 'system:update_system' system.id %}';">
+            Update System Details
+          </button>
 
+          <h3>Milestones</h3>
+          <button type="button" class="btn btn-default" onclick="location.href = '{% url 'system:create_ms_connection_from_system' system.id %}';">
+            Add a Milestone
+          </button>
+          <button type="button" class="btn btn-default" onclick="location.href = '#';">
+            Update a Milestone
+          </button>
 
-
-
-        <div class="col-lg-12">
-          <div class="col-lg-offset-1 col-lg-1">
-            <button type="button" class="btn btn-default" onclick="location.href = '{% url 'system:update_system' system.id %}';">
-              Update
-            </button>
-          </div>
-          <div class="col-lg-offset-8 col-lg-2">
-            <button type="button" class="btn btn-default" onclick="location.href = '{% url 'system:delete_system' system.id %}';">
-              Delete
-            </button>
-          </div>
+          <h3>Components</h3>
+          <button type="button" class="btn btn-default" onclick="location.href = '#';">
+            Add a Component
+          </button>
+          <button type="button" class="btn btn-default" onclick="location.href = '#';">
+            Update a Component
+          </button>
         </div>
-
       </div>
     </div>
   </div>
 </div>
 
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Components from the System</h3>
+      </div>
+      <div class="panel-body">
+        <p> Hier kommt eine liste aller komponente des Systems hin.
+            mit einem Link zur detail seite der Komponenten</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Admin Options</h3>
+      </div>
+      <div class="panel-body">
+        <p><a href="{% url 'system:delete_system' system.id %}"> Delete this System</a></p>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

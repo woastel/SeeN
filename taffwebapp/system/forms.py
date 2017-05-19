@@ -58,3 +58,17 @@ class Create_MSDBConnention_Form(forms.ModelForm):
             'milestoneFinish_date': forms.DateTimeInput(
                                     attrs={'class':'datetime-input'}),
         }
+
+class Create_MSDBConnention_Form2(forms.ModelForm):
+    class Meta:
+        model = MSDBConnention
+        fields = [
+            "milestone",
+            "milestoneFinish_date",
+        ]
+
+        # Change the withget -attrs class- to activate the datetime input (JavaScript)
+        widgets = {
+            'milestoneFinish_date': forms.DateTimeInput(
+                                    attrs={'class':'datetime-input'}),
+        }
