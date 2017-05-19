@@ -18,6 +18,7 @@ class Eut(models.Model):
 
     date_creation = models.DateTimeField()
     date_updateed = models.DateTimeField()
+    is_connected_to_climaticmeasurement = models.BooleanField(default=False)
 
     system = models.ForeignKey(System_System, on_delete=models.PROTECT)
 

@@ -42,6 +42,7 @@
         <p>Creation date: {{ eut.date_creation }} </p>
         <p>Updated: {{ eut.date_updateed }} </p>
         <p>System: {{ eut.system.name }} </p>
+        <p>EUT is connectet to measurement: {{ eut.is_connected_to_climaticmeasurement }} </p>
       </div>
     </div>
   </div>
@@ -52,18 +53,27 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
       <div class="panel-body">
-        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class="col-lg-12">
-            <h4> Add Component to EUT </h4>
-          </div>
-          <div class="col-lg-10">
-            {{form}}
-          </div>
-          <div class="col-lg-2">
-            <button type="submit" class="btn btn-success">Add</button>
-          </div>
-        </form>
+
+        {% if eut.is_connected_to_climaticmeasurement == False %}
+
+          <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-lg-12">
+              <h4> Add Component to EUT </h4>
+            </div>
+            <div class="col-lg-10">
+              {{form}}
+            </div>
+            <div class="col-lg-2">
+
+                <button type="submit" class="btn btn-success">Add</button>
+
+            </div>
+          </form>
+
+        {% else %}
+          <p>The EUT is contected to a measurement you cant cange the component connections </p>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -101,8 +111,14 @@
                     <td>{{ item.component_count }}</td>
                     <td><a href="{% url 'components:component_detail' item.component.component_id %}">
                         {{ item.component.name }}</a></td>
-                    <td><a href="{% url 'eut:eut_delete_component_to_eut_connection' item.id %}">
-                        Remove</a></td>
+
+                    {% if eut.is_connected_to_climaticmeasurement == False %}
+                      <td><a href="{% url 'eut:eut_delete_component_to_eut_connection' item.id %}">
+                          Remove</a></td>
+                    {% else %}
+                      <td><strike>Remove</strike></td>
+                    {% endif %}
+
                   </tr>
               {% endfor %}
             </tbody>

@@ -142,8 +142,6 @@ class SensorMax(models.Model):
     def __str__(self):
         return str(self.name_list)
 
-
-
 class SensorValue(models.Model):
     name_list = models.CharField(max_length=500)
     value1 =  models.DecimalField(max_digits=6, decimal_places=2)
@@ -314,6 +312,18 @@ class Climaticmeasure(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+    def save(self, *args, **kwargs):
+        print(self.eut_id_fk.is_connected_to_climaticmeasurement)
+        eut_list = Eut.objects.filter(id=self.eut_id_fk.id)
+        eut = eut_list[0]
+        eut.is_connected_to_climaticmeasurement = True
+        eut.save()
+
+        print(self.eut_id_fk.is_connected_to_climaticmeasurement)
+
+        super(Climaticmeasure, self).save(*args, **kwargs)
+
 
 
     def get_sensor_date(self):

@@ -81,8 +81,10 @@ class CreateCM_byMCPS(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
 
-        if form.is_valid():
+        print("CHEKC BASTI")
 
+        if form.is_valid():
+            print("CHEKC BASTI")
             instance = form.save(commit=False)
             instance.created_user = request.user
 
@@ -118,6 +120,7 @@ class CreateCM_byMCPS(View):
 
 
             instance.save()
+            print(instance)
 
 
             return HttpResponseRedirect(reverse('climaticmeasurement:index'))
