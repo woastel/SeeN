@@ -1,4 +1,5 @@
 from django import forms
+from components.models import Component
 from .models import (
     System,
     SystemModel,
@@ -75,6 +76,8 @@ class Create_MSDBConnention_Form2(forms.ModelForm):
         }
 
 class Create_Component_Connection_Form(forms.ModelForm):
+    component = forms.ModelChoiceField(queryset=Component.objects.order_by("name"))
+
     class Meta:
         model = System_Component_connection
         fields = [

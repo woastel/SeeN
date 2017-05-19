@@ -88,6 +88,15 @@ class Detail_System_View(View):
             # get the hole list of msdb connections from the system
             msdbconnection_list = MSDBConnention.objects.filter(system=var_system).order_by('milestone__name')
             context['msdbconnection_list'] = msdbconnection_list
+
+
+            system_component_connection_list = (
+                System_Component_connection.objects.filter(
+                    system=var_system).order_by('component__component_id'))
+
+            context['system_component_connection_list'] = (
+                system_component_connection_list)
+
         else:
             # warning output
             print("Error: the system is not avalible")
@@ -407,19 +416,95 @@ class Delete_MSDB_Connection(DeleteView):
 
 
 # Views for the System - Component Conection
-
+@method_decorator(login_required, name='dispatch')
 class Create_Component_Connection(View):
     form_class = Create_Component_Connection_Form
     template_name = 'system/system_createForm.html'
-    panel_titel = {'panel_titel' : 'Create a Milestone Time System Connection'}
+    panel_titel = 'Create a Milestone Time System Connection'
 
     def get(self, request, *args, **kwargs):
-        pass
+        form = self.form_class()
+        context = {}
+        context["form"] = form
+        context["panel_titel"] = self.panel_titel
+
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        pass
+        # laden der ausgefuellten form aus dem POST request
+        form = self.form_class(request.POST)
 
 
-class Delete_Component_Connection(View):
+        # Die System id aus dem POST request laden
+        print(kwargs)
+        system_id = kwargs["pk"]
+        # die milestone id aus dem POST request laden
+        component_id = request.POST["component"]
+
+
+
+        # Alle Objecte laden die system_id und milestone_id enthalten
+        # Denn es darf für jedes system nur ein milesone mit einem type geben
+        # nicht das es 2x den MS 10 gibt
+        list_component_connects = System_Component_connection.objects.filter(
+                                        system=system_id, component=component_id)
+
+        # checken ob die geladene liste objecte enthaelt
+        # oder die laenge der liste 0 ist
+        if len(list_component_connects) != 0:
+            error_msg = []
+            error_msg.append(str("Es besteht schon ein objekt aus system_id {} und component_id {}".format(system_id, component_id)))
+            print("DEBUG: Error: es ist schon ein Objects dieser Kombination vorhanden")
+
+        else:
+            print("DEBUG: OK: Object kann erstellt werden.")
+
+            if form.is_valid():
+
+                instance = form.save(commit=False)
+
+                instance.user_creator = request.user
+                instance.date_creation = datetime.now()
+                system_var = System.objects.filter(id=system_id)[0]
+                instance.system = system_var
+
+                instance.save()
+                return HttpResponseRedirect(reverse_lazy('system:system_detail', kwargs={"pk": system_id}))
+
+
+        context = {'form': form}
+        context["panel_titel"] = self.panel_titel
+        context.update({"error_msg_avalible": True})
+        context.update({"error_msg_list": error_msg})
+        return render(request, self.template_name, context)
+
+@method_decorator(login_required, name='dispatch')
+class Delete_Component_Connection(DeleteView):
     model = System_Component_connection
     template_name = "components/component_delete_confirm.html"
+
+    def delete(self, request, *args, **kwargs):
+        """
+            Funktion to check the user
+            only the creator can delete the object nobody else
+        """
+
+        # get the object you would be delete
+        self.object = self.get_object()
+        # check if the creator.username is the requested username
+        ## if self.object.creator.username != request.user.get_username():
+        ##     # if not send a error
+        ##     return HttpResponse("FAIL not the right user")
+
+        print(kwargs)
+
+        system = self.object.system
+
+        self.success_url = reverse_lazy('system:system_detail', kwargs={"pk": system.id})
+
+        # store the success url
+        success_url = self.get_success_url()
+        # delete the object
+        self.object.delete()
+        # return the success url
+        return HttpResponseRedirect(success_url)

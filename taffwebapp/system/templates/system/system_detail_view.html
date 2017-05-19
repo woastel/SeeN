@@ -58,7 +58,7 @@
                   <th>{{ item.system.name }}</th>
                   <th>{{ item.creation_date }}</th>
                   <th><a href="{% url 'system:delete_msdb_connection' item.id %}">
-                    <span class="glyphicon glyphicon-trash"></span>
+                    <span class="glyphicon glyphicon-trash">(id - {{item.id}})</span>
                   </a></th>
                 </tr>
               {% endfor %}
@@ -86,17 +86,12 @@
           <button type="button" class="btn btn-default" onclick="location.href = '{% url 'system:create_ms_connection_from_system' system.id %}';">
             Add a Milestone
           </button>
-          <button type="button" class="btn btn-default" onclick="location.href = '#';">
-            Update a Milestone
-          </button>
 
           <h3>Components</h3>
-          <button type="button" class="btn btn-default" onclick="location.href = '#';">
+          <button type="button" class="btn btn-default" onclick="location.href = '{% url 'system:create_component_connection' system.id %}';">
             Add a Component
           </button>
-          <button type="button" class="btn btn-default" onclick="location.href = '#';">
-            Update a Component
-          </button>
+
         </div>
       </div>
     </div>
@@ -110,8 +105,30 @@
         <h3 class="panel-title">Components from the System</h3>
       </div>
       <div class="panel-body">
-        <p> Hier kommt eine liste aller komponente des Systems hin.
-            mit einem Link zur detail seite der Komponenten</p>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr class="warning">
+                <td>System</td>
+                <td>component_count</td>
+                <td>component</td>
+                <td>Delete</td>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in system_component_connection_list %}
+                <tr>
+                  <th>{{ item.system }}</th>
+                  <th>{{ item.component_count }}</th>
+                  <th>{{ item.component }}</th>
+                  <th><a href="{% url 'system:delete_component_connection' item.id %}">
+                    <span class="glyphicon glyphicon-trash"> (id - {{item.id}}) </span>
+                  </a></th>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
