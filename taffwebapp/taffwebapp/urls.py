@@ -22,6 +22,8 @@ urlpatterns = [
     url(r'^system/', include('system.urls')),
     url(r'^todos/', include('todos.urls')),
     url(r'^climaticmeasurement/', include('climaticmeasurement.urls')),
+    url(r'^measurement/', include('measurement.urls'))
+
     url(r'^schedule/', include('schedule.urls')),
     url(r'^comp/', include('components.urls')),
     url(r'', include('overview.urls')),
