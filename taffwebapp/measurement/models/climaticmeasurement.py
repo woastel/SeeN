@@ -298,3 +298,10 @@ class climaticmeasurement(measurement):
 
     sensorTypeList = models.ForeignKey(SensorTypeList)
     measureValues = models.ForeignKey(ClimaticMeasureValues, related_name='soistdasmitdenrelatednames')
+
+
+    def save(self, *args, **kwargs):
+        # set the measurement Type Text
+        self.measurement_type = "Climatic"
+        # Call the Super Methode
+        super(climaticmeasurement, self).save(*args, **kwargs)
