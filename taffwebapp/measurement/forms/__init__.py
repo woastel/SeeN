@@ -1,1 +1,1 @@
-from .climaticmeasure import *
+from .measurement_climatic import UploadFileForm
