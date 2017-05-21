@@ -1,19 +1,24 @@
 from django.conf.urls import url
 from . import views
 
-from .views import measurement
-from .views import measurement_climatic
-from .views import measurement_emi
+from measurement.views import (
+    view_measurement,
+    view_measurement_climatic,
+    view_measurement_emi)
 
 app_name = 'measurement'
 
 urlpatterns = [
-    # /euts/
-    url(r'^measurement/$',          measurement.IndexView.as_view() ,           name='m_index'),
+    # Measurement (general) Views
+    url(r'^measurement/$',          view_measurement.IndexView.as_view() ,                          name='m_index'),
 
-    url(r'^measurement_climatic/$', measurement_climatic.IndexView.as_view() ,  name='mc_index'),
+    # Measurement Climatic (cm) Views
+    url(r'^measurement_climatic/$', view_measurement_climatic.IndexView.as_view() ,                          name='mc_index'),
+    url(r'^measurement_climatic/create/cmbymcps/$', view_measurement_climatic.CreateCM_byMCPS.as_view(),     name='mc_create_bymcps'),
 
-    url(r'^measurement_emi/$',      measurement_emi.IndexView.as_view() ,       name='memi_index'),
+
+    # Measurement EMI (memi) Views
+    url(r'^measurement_emi/$',      view_measurement_emi.IndexView.as_view() ,                      name='memi_index'),
 
 
 ]

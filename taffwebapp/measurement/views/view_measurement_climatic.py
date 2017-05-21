@@ -1,10 +1,22 @@
 
-from django.views import generic
+from django.views import generic, View
 from django.shortcuts import render
-from measurement.forms import UploadFileForm
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from datetime import datetime
+from measurement.forms import form_measurement_climatic
+from measurement.readMcpsFile import readMcpsStatisticFile
+from measurement.cm_table_generator import cm_table_list_generator
+from measurement.models.measurement_climatic import (
+        climatic_SensorMax,
+        climatic_SensorName,
+        climatic_SensorValue,
+        climatic_MeasureValues, )
 
 @method_decorator(login_required, name='dispatch')
-class IndexView(generic.View):
+class IndexView(View):
     template_name = 'measurement/index_measurement_climatic.html'
 
     def get(self, request, *args, **kwargs):
@@ -13,9 +25,8 @@ class IndexView(generic.View):
 
         return render(request, self.template_name, context)
 
-
 @method_decorator(login_required, name='dispatch')
-class ListOfClimaticMeasurements_View(generic.View):
+class ListOfClimaticMeasurements_View(View):
     template_name = ""
 
     def get(self, request, *args, **kwargs):
@@ -26,24 +37,25 @@ class ListOfClimaticMeasurements_View(generic.View):
 
         return render(request, self.template_name, context)
 
-
 @method_decorator(login_required, name='dispatch')
 class CreateCM_byMCPS(View):
-    form_class = UploadFileForm
-    template_name = 'climaticmeasurement/upload-MCPS-file.html'
-    panel_titel = { "panel_titel": "Create Climatic-Measurement by MCPS File"}
+    form_class = form_measurement_climatic.UploadFileForm
+    template_name = 'measurement/formular.html'
+    panel_titel =  "New Upload MCPS File"
     def get(self, request, *args, **kwargs):
 
         initial =  {
-            "creation_date": datetime.now(),
-            "creator": request.user,
+            "date_creation": datetime.now(),
+            "date_update": datetime.now(),
+            "user_creation": request.user,
+            "user_update": request.user,
 
         }
 
         form = self.form_class(initial=initial)
 
         context = {'form': form}
-        context.update(self.panel_titel)
+        context["panel_titel"] = self.panel_titel
 
         return render(request, self.template_name, context)
 
@@ -57,7 +69,7 @@ class CreateCM_byMCPS(View):
             instance = form.save(commit=False)
             instance.created_user = request.user
 
-            mcpsfile_obj = readMcpsStatisticFile(request.FILES["file"], request.user.username)
+            mcpsfile_obj = readMcpsStatisticFile(request.FILES["_file"], request.user.username)
 
 
             maxvalue_dict = mcpsfile_obj.sensorMax
@@ -75,7 +87,7 @@ class CreateCM_byMCPS(View):
             sensorvalue_temp.save()
 
 
-            measurement_values = MeasureValues()
+            measurement_values = climatic_MeasureValues()
             measurement_values.name = mcpsfile_obj.mcpsInfoLine
             measurement_values.info = mcpsfile_obj.mcpsInfoLine
             measurement_values.sensorMax_id_fk = sensormax_temp
@@ -84,7 +96,7 @@ class CreateCM_byMCPS(View):
             measurement_values.save()
 
 
-            instance.measureValues_id_fk = measurement_values
+            instance.measureValues = measurement_values
 
 
 
@@ -92,16 +104,15 @@ class CreateCM_byMCPS(View):
             print(instance)
 
 
-            return HttpResponseRedirect(reverse('climaticmeasurement:index'))
+            return HttpResponseRedirect(reverse('measurement:mc_index'))
 
         context = {'form': form}
         context.update(self.panel_titel)
         return render(request, self.template_name, context)
 
 
-@method_decorator(login_required, name='dispatch')
 def create_sensorMax_model(max_dict):
-    sensormax_temp = SensorMax()
+    sensormax_temp = climatic_SensorMax()
     sensormax_temp.name_list = "max"
     sensormax_temp.max1  = max_dict["max1"]
     sensormax_temp.max2  = max_dict["max2"]
@@ -166,10 +177,8 @@ def create_sensorMax_model(max_dict):
 
     return sensormax_temp
 
-
-@method_decorator(login_required, name='dispatch')
 def create_sensorName_model(name_dict):
-    sensornamemodel_temp = SensorName()
+    sensornamemodel_temp = climatic_SensorName()
     sensornamemodel_temp.name_list = "name"
     sensornamemodel_temp.name1  = name_dict["name1"]
     sensornamemodel_temp.name2  = name_dict["name2"]
@@ -234,10 +243,8 @@ def create_sensorName_model(name_dict):
 
     return sensornamemodel_temp
 
-
-@method_decorator(login_required, name='dispatch')
 def create_sensorValue_model(value_dict):
-    sensornamemodel_temp = SensorValue()
+    sensornamemodel_temp = climatic_SensorValue()
     sensornamemodel_temp.name_list = "value"
     sensornamemodel_temp.value1  = value_dict["value1"]
     sensornamemodel_temp.value2  = value_dict["value2"]

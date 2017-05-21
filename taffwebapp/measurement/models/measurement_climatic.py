@@ -304,4 +304,4 @@ class measurement_climatic(measurement):
         # set the measurement Type Text
         self.measurement_type = "Climatic"
         # Call the Super Methode
-        super(climaticmeasurement, self).save(*args, **kwargs)
+        super(measurement_climatic, self).save(*args, **kwargs)
