@@ -2,79 +2,79 @@ from django.db import models
 
 from .measurement import measurement
 
-class SensorType(models.Model):
+class climatic_SensorType(models.Model):
     typee = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.typee)
 
-class SensorTypeList(models.Model):
+class climatic_SensorTypeList(models.Model):
     name_list = models.CharField(max_length=500)
-    typee1 =  models.ForeignKey(SensorType, related_name='das')
-    typee2 =  models.ForeignKey(SensorType, related_name='da431s')
-    typee3 =  models.ForeignKey(SensorType, related_name="Non1234e")
-    typee4 =  models.ForeignKey(SensorType, related_name="No234577456ne")
-    typee5 =  models.ForeignKey(SensorType, related_name="No235ne")
-    typee6 =  models.ForeignKey(SensorType, related_name="Nogebrene")
-    typee7 =  models.ForeignKey(SensorType, related_name="Noyvfbne")
-    typee8 =  models.ForeignKey(SensorType, related_name="Nowerwene")
-    typee9 =  models.ForeignKey(SensorType, related_name="Noqwrwerne")
-    typee10 = models.ForeignKey(SensorType, related_name="Norrqrne")
-    typee11 = models.ForeignKey(SensorType, related_name="Nobzbzbanifne")
-    typee12 = models.ForeignKey(SensorType, related_name="Nosdfgdsne")
-    typee13 = models.ForeignKey(SensorType, related_name="Nxcbone")
-    typee14 = models.ForeignKey(SensorType, related_name="Nonhrzne")
-    typee15 = models.ForeignKey(SensorType, related_name="Non7575e")
-    typee16 = models.ForeignKey(SensorType, related_name="No4538ne")
-    typee17 = models.ForeignKey(SensorType, related_name="No98689ne")
-    typee18 = models.ForeignKey(SensorType, related_name="No7287ne")
-    typee19 = models.ForeignKey(SensorType, related_name="No45ne")
-    typee20 = models.ForeignKey(SensorType, related_name="Nonecrwe")
-    typee21 = models.ForeignKey(SensorType, related_name="Nocercne")
-    typee22 = models.ForeignKey(SensorType, related_name="Nsgnetzbone")
-    typee23 = models.ForeignKey(SensorType, related_name="Nwertone")
-    typee24 = models.ForeignKey(SensorType, related_name="Nsdfgone")
-    typee25 = models.ForeignKey(SensorType, related_name="Noxvne")
-    typee26 = models.ForeignKey(SensorType, related_name="Nonss78698756645ge")
-    typee27 = models.ForeignKey(SensorType, related_name="Nlkljkjsfhone")
-    typee28 = models.ForeignKey(SensorType, related_name="Nonwerge")
-    typee29 = models.ForeignKey(SensorType, related_name="Nonhte")
-    typee30 = models.ForeignKey(SensorType, related_name="Nonasdfe")
-    typee31 = models.ForeignKey(SensorType, related_name="Nunztone")
-    typee32 = models.ForeignKey(SensorType, related_name="Nonsdrgeegcrtgfge")
-    typee33 = models.ForeignKey(SensorType, related_name="Nosdsdsdsdsddfgne")
-    typee34 = models.ForeignKey(SensorType, related_name="Non235234e")
-    typee35 = models.ForeignKey(SensorType, related_name="No46484ne")
-    typee36 = models.ForeignKey(SensorType, related_name="No523156ne")
-    typee37 = models.ForeignKey(SensorType, related_name="No45684ne")
-    typee38 = models.ForeignKey(SensorType, related_name="Nokiysdne")
-    typee39 = models.ForeignKey(SensorType, related_name="No4684ne")
-    typee40 = models.ForeignKey(SensorType, related_name="Noxcvbxcne")
-    typee41 = models.ForeignKey(SensorType, related_name="Nofghne")
-    typee42 = models.ForeignKey(SensorType, related_name="Nonfgne")
-    typee43 = models.ForeignKey(SensorType, related_name="Nosdfne")
-    typee44 = models.ForeignKey(SensorType, related_name="Nonsdfe")
-    typee45 = models.ForeignKey(SensorType, related_name="Nxcvbone")
-    typee46 = models.ForeignKey(SensorType, related_name="Nosdfgnesdf")
-    typee47 = models.ForeignKey(SensorType, related_name="Noyssdfgne")
-    typee48 = models.ForeignKey(SensorType, related_name="Nosdfgnesdfgne")
-    typee49 = models.ForeignKey(SensorType, related_name="Noddsdfgne")
-    typee50 = models.ForeignKey(SensorType, related_name="Nosdfgne")
-    typee51 = models.ForeignKey(SensorType, related_name="Nasfone")
-    typee52 = models.ForeignKey(SensorType, related_name="Nonrewfe")
-    typee53 = models.ForeignKey(SensorType, related_name="Noerfne")
-    typee54 = models.ForeignKey(SensorType, related_name="Nonasde")
-    typee55 = models.ForeignKey(SensorType, related_name="Nonyxcve")
-    typee56 = models.ForeignKey(SensorType, related_name="Nonfghjfe")
-    typee57 = models.ForeignKey(SensorType, related_name="Nonjke")
-    typee58 = models.ForeignKey(SensorType, related_name="Nonasfve")
-    typee59 = models.ForeignKey(SensorType, related_name="Nonefdghdfgh")
-    typee60 = models.ForeignKey(SensorType, related_name="Nasdasdfa")
+    typee1 =  models.ForeignKey(climatic_SensorType, related_name='das')
+    typee2 =  models.ForeignKey(climatic_SensorType, related_name='da431s')
+    typee3 =  models.ForeignKey(climatic_SensorType, related_name="Non1234e")
+    typee4 =  models.ForeignKey(climatic_SensorType, related_name="No234577456ne")
+    typee5 =  models.ForeignKey(climatic_SensorType, related_name="No235ne")
+    typee6 =  models.ForeignKey(climatic_SensorType, related_name="Nogebrene")
+    typee7 =  models.ForeignKey(climatic_SensorType, related_name="Noyvfbne")
+    typee8 =  models.ForeignKey(climatic_SensorType, related_name="Nowerwene")
+    typee9 =  models.ForeignKey(climatic_SensorType, related_name="Noqwrwerne")
+    typee10 = models.ForeignKey(climatic_SensorType, related_name="Norrqrne")
+    typee11 = models.ForeignKey(climatic_SensorType, related_name="Nobzbzbanifne")
+    typee12 = models.ForeignKey(climatic_SensorType, related_name="Nosdfgdsne")
+    typee13 = models.ForeignKey(climatic_SensorType, related_name="Nxcbone")
+    typee14 = models.ForeignKey(climatic_SensorType, related_name="Nonhrzne")
+    typee15 = models.ForeignKey(climatic_SensorType, related_name="Non7575e")
+    typee16 = models.ForeignKey(climatic_SensorType, related_name="No4538ne")
+    typee17 = models.ForeignKey(climatic_SensorType, related_name="No98689ne")
+    typee18 = models.ForeignKey(climatic_SensorType, related_name="No7287ne")
+    typee19 = models.ForeignKey(climatic_SensorType, related_name="No45ne")
+    typee20 = models.ForeignKey(climatic_SensorType, related_name="Nonecrwe")
+    typee21 = models.ForeignKey(climatic_SensorType, related_name="Nocercne")
+    typee22 = models.ForeignKey(climatic_SensorType, related_name="Nsgnetzbone")
+    typee23 = models.ForeignKey(climatic_SensorType, related_name="Nwertone")
+    typee24 = models.ForeignKey(climatic_SensorType, related_name="Nsdfgone")
+    typee25 = models.ForeignKey(climatic_SensorType, related_name="Noxvne")
+    typee26 = models.ForeignKey(climatic_SensorType, related_name="Nonss78698756645ge")
+    typee27 = models.ForeignKey(climatic_SensorType, related_name="Nlkljkjsfhone")
+    typee28 = models.ForeignKey(climatic_SensorType, related_name="Nonwerge")
+    typee29 = models.ForeignKey(climatic_SensorType, related_name="Nonhte")
+    typee30 = models.ForeignKey(climatic_SensorType, related_name="Nonasdfe")
+    typee31 = models.ForeignKey(climatic_SensorType, related_name="Nunztone")
+    typee32 = models.ForeignKey(climatic_SensorType, related_name="Nonsdrgeegcrtgfge")
+    typee33 = models.ForeignKey(climatic_SensorType, related_name="Nosdsdsdsdsddfgne")
+    typee34 = models.ForeignKey(climatic_SensorType, related_name="Non235234e")
+    typee35 = models.ForeignKey(climatic_SensorType, related_name="No46484ne")
+    typee36 = models.ForeignKey(climatic_SensorType, related_name="No523156ne")
+    typee37 = models.ForeignKey(climatic_SensorType, related_name="No45684ne")
+    typee38 = models.ForeignKey(climatic_SensorType, related_name="Nokiysdne")
+    typee39 = models.ForeignKey(climatic_SensorType, related_name="No4684ne")
+    typee40 = models.ForeignKey(climatic_SensorType, related_name="Noxcvbxcne")
+    typee41 = models.ForeignKey(climatic_SensorType, related_name="Nofghne")
+    typee42 = models.ForeignKey(climatic_SensorType, related_name="Nonfgne")
+    typee43 = models.ForeignKey(climatic_SensorType, related_name="Nosdfne")
+    typee44 = models.ForeignKey(climatic_SensorType, related_name="Nonsdfe")
+    typee45 = models.ForeignKey(climatic_SensorType, related_name="Nxcvbone")
+    typee46 = models.ForeignKey(climatic_SensorType, related_name="Nosdfgnesdf")
+    typee47 = models.ForeignKey(climatic_SensorType, related_name="Noyssdfgne")
+    typee48 = models.ForeignKey(climatic_SensorType, related_name="Nosdfgnesdfgne")
+    typee49 = models.ForeignKey(climatic_SensorType, related_name="Noddsdfgne")
+    typee50 = models.ForeignKey(climatic_SensorType, related_name="Nosdfgne")
+    typee51 = models.ForeignKey(climatic_SensorType, related_name="Nasfone")
+    typee52 = models.ForeignKey(climatic_SensorType, related_name="Nonrewfe")
+    typee53 = models.ForeignKey(climatic_SensorType, related_name="Noerfne")
+    typee54 = models.ForeignKey(climatic_SensorType, related_name="Nonasde")
+    typee55 = models.ForeignKey(climatic_SensorType, related_name="Nonyxcve")
+    typee56 = models.ForeignKey(climatic_SensorType, related_name="Nonfghjfe")
+    typee57 = models.ForeignKey(climatic_SensorType, related_name="Nonjke")
+    typee58 = models.ForeignKey(climatic_SensorType, related_name="Nonasfve")
+    typee59 = models.ForeignKey(climatic_SensorType, related_name="Nonefdghdfgh")
+    typee60 = models.ForeignKey(climatic_SensorType, related_name="Nasdasdfa")
 
     def __str__(self):
         return str(self.name_list)
 
-class SensorMax(models.Model):
+class climatic_SensorMax(models.Model):
     name_list = models.CharField(max_length=500)
     max1 =  models.DecimalField(max_digits=6, decimal_places=2)
     max2 =  models.DecimalField(max_digits=6, decimal_places=2)
@@ -140,7 +140,7 @@ class SensorMax(models.Model):
     def __str__(self):
         return str(self.name_list)
 
-class SensorValue(models.Model):
+class climatic_SensorValue(models.Model):
     name_list = models.CharField(max_length=500)
     value1 =  models.DecimalField(max_digits=6, decimal_places=2)
     value2 =  models.DecimalField(max_digits=6, decimal_places=2)
@@ -206,7 +206,7 @@ class SensorValue(models.Model):
     def __str__(self):
         return str(self.name_list)
 
-class SensorName(models.Model):
+class climatic_SensorName(models.Model):
     name_list = models.CharField(max_length=500)
     name1 = models.CharField(max_length=100)
     name2 = models.CharField(max_length=100)
@@ -272,19 +272,19 @@ class SensorName(models.Model):
     def __str__(self):
         return str(self.name_list)
 
-class ClimaticMeasureValues(models.Model):
-    sensorName_id_fk = models.ForeignKey(SensorName)
-    sensorValue_id_fk = models.ForeignKey(SensorValue)
-    sensorMax_id_fk = models.ForeignKey(SensorMax)
+class climatic_MeasureValues(models.Model):
+    sensorName_id_fk = models.ForeignKey(climatic_SensorName)
+    sensorValue_id_fk = models.ForeignKey(climatic_SensorValue)
+    sensorMax_id_fk = models.ForeignKey(climatic_SensorMax)
 
-class TestLoad(models.Model):
+class climatic_TestLoad(models.Model):
     name = models.CharField(max_length=100)
     info = models.CharField(max_length=500)
 
     def __str__(self):
         return str(self.name)
 
-class AmbientTemp(models.Model):
+class climatic_AmbientTemp(models.Model):
     value = models.PositiveIntegerField()
 
     def __str__(self):
@@ -292,12 +292,12 @@ class AmbientTemp(models.Model):
 
 class measurement_climatic(measurement):
     """ Climatic measurement specification """
-    AmbientTemp = models.ForeignKey(AmbientTemp)
+    AmbientTemp = models.ForeignKey(climatic_AmbientTemp)
 
-    TestLoad = models.ForeignKey(TestLoad)
+    TestLoad = models.ForeignKey(climatic_TestLoad)
 
-    sensorTypeList = models.ForeignKey(SensorTypeList)
-    measureValues = models.ForeignKey(ClimaticMeasureValues, related_name='soistdasmitdenrelatednames')
+    sensorTypeList = models.ForeignKey(climatic_SensorTypeList)
+    measureValues = models.ForeignKey(climatic_MeasureValues, related_name='soistdasmitdenrelatednames')
 
 
     def save(self, *args, **kwargs):
