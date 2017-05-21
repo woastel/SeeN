@@ -8,6 +8,7 @@ climaticmeasurement/migrations/
 measurement/__pycache__/
 measurement/migrations/
 measurement/models/__pycache__/
+measurement/views/__pycache__/
 
 
 components/__pycache__/
