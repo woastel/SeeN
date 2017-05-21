@@ -1,9 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 from eut.models import Eut
+from model_utils.managers import InheritanceManager
 
 
 class measurement(models.Model):
+
+    objects = InheritanceManager()
+
+    measurement_id = models.AutoField(primary_key=True)
+
     name = models.CharField(max_length=100)
     information = models.TextField(max_length=5000)
 
@@ -12,8 +18,8 @@ class measurement(models.Model):
     date_updated = models.DateTimeField()
 
     # User
-    user_creation = models.ForeignKey(User)
-    user_updated = models.ForeignKey(User)
+    user_creation = models.ForeignKey(User, related_name="measurementUserCreationaaaa")
+    user_updated = models.ForeignKey(User, related_name="measurementlalalallalaUpdateed")
 
     # EUT information
     eut = models.ForeignKey(Eut)

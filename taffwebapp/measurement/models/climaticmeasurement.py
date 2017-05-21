@@ -1,6 +1,6 @@
 from django.db import models
 
-from measurement import measurement
+from .measurement import measurement
 
 class SensorType(models.Model):
     typee = models.CharField(max_length=100)
@@ -290,11 +290,11 @@ class AmbientTemp(models.Model):
     def __str__(self):
         return str(self.value)
 
-class climaticmeasurement(ClimaticMeasureValues):
+class climaticmeasurement(measurement):
     """ Climatic measurement specification """
     AmbientTemp = models.ForeignKey(AmbientTemp)
 
     TestLoad = models.ForeignKey(TestLoad)
 
     sensorTypeList = models.ForeignKey(SensorTypeList)
-    measureValues = models.ForeignKey(MeasureValues)
+    measureValues = models.ForeignKey(ClimaticMeasureValues, related_name='soistdasmitdenrelatednames')

@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'schedule.apps.ScheduleConfig',
     'components.apps.ComponentsConfig',
+    'measurement.apps.MeasurementConfig',
+
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
