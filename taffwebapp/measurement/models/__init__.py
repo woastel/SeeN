@@ -1,3 +1,3 @@
 from .measurement import measurement
-from .climaticmeasurement import *
-from .emimeasurement import *
+from .measurement_climatic import *
+from .measurement_emi import *

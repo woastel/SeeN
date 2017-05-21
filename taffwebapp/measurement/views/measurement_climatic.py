@@ -3,8 +3,8 @@ from django.views import generic
 from django.shortcuts import render
 
 
-class MainView(generic.View):
-    template_name = 'measurement/index.html'
+class IndexView(generic.View):
+    template_name = 'measurement/index_measurement_climatic.html'
 
     def get(self, request, *args, **kwargs):
 

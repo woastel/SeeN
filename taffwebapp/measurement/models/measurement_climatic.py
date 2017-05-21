@@ -290,7 +290,7 @@ class AmbientTemp(models.Model):
     def __str__(self):
         return str(self.value)
 
-class climaticmeasurement(measurement):
+class measurement_climatic(measurement):
     """ Climatic measurement specification """
     AmbientTemp = models.ForeignKey(AmbientTemp)
 
