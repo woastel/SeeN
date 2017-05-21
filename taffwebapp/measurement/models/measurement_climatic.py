@@ -1,8 +1,6 @@
 from django.db import models
 
-# Create your models here.
-from eut.models import Eut
-from django.contrib.auth.models import User
+from .measurement import measurement
 
 class SensorType(models.Model):
     typee = models.CharField(max_length=100)
@@ -274,16 +272,10 @@ class SensorName(models.Model):
     def __str__(self):
         return str(self.name_list)
 
-class MeasureValues(models.Model):
-    name = models.CharField(max_length=500)
-    info = models.CharField(max_length=500)
+class ClimaticMeasureValues(models.Model):
     sensorName_id_fk = models.ForeignKey(SensorName)
     sensorValue_id_fk = models.ForeignKey(SensorValue)
     sensorMax_id_fk = models.ForeignKey(SensorMax)
-
-
-    def __str__(self):
-        return str(self.name)
 
 class TestLoad(models.Model):
     name = models.CharField(max_length=100)
@@ -298,77 +290,18 @@ class AmbientTemp(models.Model):
     def __str__(self):
         return str(self.value)
 
-# Create your models here.
-class Climaticmeasure(models.Model):
-    name = models.CharField(max_length=100)
-    info = models.CharField(max_length=500)
-    creation_date = models.DateTimeField()
-    creator = models.ForeignKey(User)
-    eut_id_fk = models.ForeignKey(Eut, on_delete=models.PROTECT)
-    sensorTypeList_id_fk = models.ForeignKey(SensorTypeList)
-    measureValues_id_fk = models.ForeignKey(MeasureValues, on_delete=models.PROTECT)
-    testload_id_fk = models.ForeignKey(TestLoad, on_delete=models.PROTECT)
-    ambient_id_fk = models.ForeignKey(AmbientTemp, on_delete=models.PROTECT)
+class measurement_climatic(measurement):
+    """ Climatic measurement specification """
+    AmbientTemp = models.ForeignKey(AmbientTemp)
 
-    def __str__(self):
-        return str(self.name)
+    TestLoad = models.ForeignKey(TestLoad)
+
+    sensorTypeList = models.ForeignKey(SensorTypeList)
+    measureValues = models.ForeignKey(ClimaticMeasureValues, related_name='soistdasmitdenrelatednames')
+
 
     def save(self, *args, **kwargs):
-        print(self.eut_id_fk.is_connected_to_climaticmeasurement)
-        eut_list = Eut.objects.filter(id=self.eut_id_fk.id)
-        eut = eut_list[0]
-        eut.is_connected_to_climaticmeasurement = True
-        eut.save()
-
-        print(self.eut_id_fk.is_connected_to_climaticmeasurement)
-
-        super(Climaticmeasure, self).save(*args, **kwargs)
-
-
-
-    def get_sensor_date(self):
-        listee = []
-        dataset = {"row1": {    "n1":   self.measureValues_id_fk.sensorName_id_fk.name1,
-                                "m1":     self.measureValues_id_fk.sensorMax_id_fk.max1,
-                                "v1": self.measureValues_id_fk.sensorValue_id_fk.value1} }
-        listee.append(dataset)
-        dataset = {"row2": {    "n2":   self.measureValues_id_fk.sensorName_id_fk.name2,
-                                "m2":     self.measureValues_id_fk.sensorMax_id_fk.max2,
-                                "v2": self.measureValues_id_fk.sensorValue_id_fk.value2} }
-        listee.append(dataset)
-        dataset = {"row3": {    "n3":   self.measureValues_id_fk.sensorName_id_fk.name3,
-                                "m3":     self.measureValues_id_fk.sensorMax_id_fk.max3,
-                                "v3": self.measureValues_id_fk.sensorValue_id_fk.value3} }
-        listee.append(dataset)
-        dataset = {"row4": {    "n4":   self.measureValues_id_fk.sensorName_id_fk.name4,
-                                "m4":     self.measureValues_id_fk.sensorMax_id_fk.max4,
-                                "v4": self.measureValues_id_fk.sensorValue_id_fk.value4} }
-        listee.append(dataset)
-        dataset = {"row5": {    "n5":   self.measureValues_id_fk.sensorName_id_fk.name5,
-                                "m5":     self.measureValues_id_fk.sensorMax_id_fk.max5,
-                                "v5": self.measureValues_id_fk.sensorValue_id_fk.value5} }
-        listee.append(dataset)
-        dataset = {"row6": {    "n6":   self.measureValues_id_fk.sensorName_id_fk.name6,
-                                "m6":     self.measureValues_id_fk.sensorMax_id_fk.max6,
-                                "v6": self.measureValues_id_fk.sensorValue_id_fk.value6} }
-        listee.append(dataset)
-        dataset = {"row7": {    "n7":   self.measureValues_id_fk.sensorName_id_fk.name7,
-                                "m7":     self.measureValues_id_fk.sensorMax_id_fk.max7,
-                                "v7": self.measureValues_id_fk.sensorValue_id_fk.value7} }
-        listee.append(dataset)
-        dataset = {"row8": {    "n8":   self.measureValues_id_fk.sensorName_id_fk.name8,
-                                "m8":     self.measureValues_id_fk.sensorMax_id_fk.max8,
-                                "v8": self.measureValues_id_fk.sensorValue_id_fk.value8} }
-        listee.append(dataset)
-        dataset = {"row9": {    "n9":   self.measureValues_id_fk.sensorName_id_fk.name9,
-                                "m9":     self.measureValues_id_fk.sensorMax_id_fk.max9,
-                                "v9": self.measureValues_id_fk.sensorValue_id_fk.value9} }
-        listee.append(dataset)
-        dataset = {"row10": {   "n10":   self.measureValues_id_fk.sensorName_id_fk.name10,
-                                "m10":     self.measureValues_id_fk.sensorMax_id_fk.max10,
-                                "v10": self.measureValues_id_fk.sensorValue_id_fk.value10} }
-        listee.append(dataset)
-
-
-
-        return listee
+        # set the measurement Type Text
+        self.measurement_type = "Climatic"
+        # Call the Super Methode
+        super(climaticmeasurement, self).save(*args, **kwargs)

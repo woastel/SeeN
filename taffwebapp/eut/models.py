@@ -10,6 +10,10 @@ from components.models import Component
 
 
 class Eut(models.Model):
+    """
+        Stellt eine verbing zwischen System und componenten dar
+        der eut kann spaeter an eine Messung gehängt werden
+    """
     name = models.CharField(max_length=100)
     info = models.CharField(max_length=500)
 
@@ -19,6 +23,11 @@ class Eut(models.Model):
     date_creation = models.DateTimeField()
     date_updateed = models.DateTimeField()
 
+    # Wenn dieses Feld True ist duerfen die componenten des systems nicht mehr
+    #  geaendert werden.
+    is_connected_to_climaticmeasurement = models.BooleanField(default=False)
+
+    # das System zudem der EUT gehoert
     system = models.ForeignKey(System_System, on_delete=models.PROTECT)
 
 
@@ -33,6 +42,13 @@ class Eut(models.Model):
 
 
 class Component_connection(models.Model):
+    """
+        Component_connection
+
+        this connection is the connection between a component and a EUT
+        on EUT  can have more then one component
+        -- das ist sozusagend die Ausbauliste des EUTs
+    """
     info = models.CharField(max_length=100)
     user_creator = models.ForeignKey(User)
     date_creation = models.DateTimeField()

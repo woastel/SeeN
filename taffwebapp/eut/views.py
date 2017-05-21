@@ -115,6 +115,10 @@ class Eut_detail_view(View):
 
 
     def post(self, request, *args, **kwargs):
+        """
+            Diese POST Methode wird benötigit um einem EUT eine Component
+            hinzuzufuegen.
+        """
         form = self.form_add_component_class(request.POST)
 
         print("......................")
@@ -133,6 +137,13 @@ class Eut_detail_view(View):
             form.date_creation = datetime.now()
             form.eut = Eut.objects.filter(id=eut_id)[0]
 
+            print("Das ist ein DEBUG")
+            print("")
+            print("")
+            print(type(form))
+            print("")
+            print("")
+
             # save the form (object)
             form.save()
 
@@ -142,3 +153,10 @@ class Eut_detail_view(View):
         context = {'form': form}
 
         return render(request, self.template_name, context)
+
+
+@method_decorator(login_required, name='dispatch')
+class DeleteComponentEutConnection(generic.DeleteView):
+    model = Component_connection
+    template_name = "components/component_delete_confirm.html"
+    success_url = reverse_lazy("eut:index")

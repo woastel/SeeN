@@ -18,13 +18,14 @@ class Component(models.Model):
     # component id is the (pk) auto
     component_id = models.AutoField(primary_key=True)
 
-    # form fields
+    # name of the component
     name = models.CharField(max_length=100)
 
     # Component Type Text - will set by the save function in the individual components
     component_type_text = models.CharField(max_length=100, default="Component")
-
+    # component Vendor
     vendor = models.ForeignKey(Vendor, models.SET_NULL, null=True)
+    # Informations about the component
     information = models.TextField(max_length=5000)
 
     # date time and user - not accesible in form (automatic generation)
@@ -32,6 +33,10 @@ class Component(models.Model):
     date_update = models.DateTimeField()
     user_creator = models.ForeignKey(User)
     user_updater= models.ForeignKey(User, related_name='%(class)s_requests_created')
+
+    # delivery date -- is the estimated delivery date
+    #   this date is relevant for the schedule
+    delivery_date = models.DateTimeField()
 
 
     # Character avalible
