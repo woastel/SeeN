@@ -52,7 +52,6 @@ class MSDBConnention(models.Model):
 
 
 
-
 # Noch nicht eingebaut
 class System_Component_connection(models.Model):
     user_creator = models.ForeignKey(User)
