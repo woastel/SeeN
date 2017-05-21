@@ -15,11 +15,11 @@ class measurement(models.Model):
 
     # Dates
     date_creation = models.DateTimeField()
-    date_updated = models.DateTimeField()
+    date_update = models.DateTimeField()
 
     # User
     user_creation = models.ForeignKey(User, related_name="measurementUserCreationaaaa")
-    user_updated = models.ForeignKey(User, related_name="measurementlalalallalaUpdateed")
+    user_update = models.ForeignKey(User, related_name="measurementlalalallalaUpdateed")
 
     # EUT information
     eut = models.ForeignKey(Eut)
